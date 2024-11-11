@@ -6,11 +6,14 @@ import (
 	"time"
 )
 
+func TestTimeParser(t *testing.T) {
+
+}
+
 func TestGatherProcesses(t *testing.T) {
 
 	// PROCESS SETS
 	process_set1 := []Process{
-
 		Process{
 			name:       "test.exe",
 			time_start: time.Date(2024, 11, 11, 13, 4, 54, 0, time.UTC),
@@ -29,7 +32,7 @@ func TestGatherProcesses(t *testing.T) {
 	}
 	// TESTS
 
-	// Actual testing
+	// Actual testing - Data present
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			result := ParseProcesses(tc.proc_string)
@@ -46,8 +49,15 @@ func TestGatherProcesses(t *testing.T) {
 
 				}
 
+			} else {
+				t.Errorf("Expected name")
 			}
 		})
 	}
-	// Actual testing
+	// Actual testing - Data present
+
+	// Actual testing - No data present
+
+	// Actual testing - No data present
+
 }
