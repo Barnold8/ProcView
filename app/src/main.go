@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	cmd := exec.Command("wmic process get Caption, CreationDate")
+	cmd := exec.Command("wmic.exe", "process", "get", "Caption,CreationDate")
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		log.Fatalf("Error running tasklist command: %v", err)
