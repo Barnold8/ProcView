@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func TestTimeParser(t *testing.T) {
+func TestTimeParser(t *testing.T) { // TODO: add fail cases where the function handles an error correctly
 
 	tests := []struct {
 		name        string
@@ -59,7 +59,7 @@ func TestGatherProcesses(t *testing.T) {
 	}
 	// TESTS
 
-	// Actual testing - Data present
+	// Actual testing
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			result := ParseProcesses(tc.proc_string)
@@ -81,10 +81,6 @@ func TestGatherProcesses(t *testing.T) {
 			}
 		})
 	}
-	// Actual testing - Data present
-
-	// Actual testing - No data present
-
-	// Actual testing - No data present
+	// Actual testing
 
 }
