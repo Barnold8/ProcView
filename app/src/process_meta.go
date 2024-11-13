@@ -81,3 +81,20 @@ func ParseProcesses(str string) []Process {
 
 	return processes
 }
+
+func removeDuplicateProcesses(unsortedProcesses []Process) []Process {
+
+	processes := make([]Process, 0, len(unsortedProcesses)) // allocate memory for n processes that already exist so we dont go over the limit
+	names := make(map[string]struct{})                      // make a map to look for keys only, we use a struct to fill the data field
+
+	for _, process := range unsortedProcesses { // for the processes in our unsorted slice
+
+		if _, exists := names[process.name]; !exists { // if the name doesnt exist
+			processes = append(processes, process) // add it to the new array
+			names[process.name] = struct{}{}       // add the name to the list of names
+		}
+
+	}
+
+	return processes
+}
