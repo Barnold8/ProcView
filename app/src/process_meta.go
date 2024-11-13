@@ -63,16 +63,19 @@ func ParseProcesses(str string) []Process {
 	for _, element := range split {
 
 		element = strings.TrimSpace(element)
-
 		if strings.Contains(element, "exe") {
-			var temp []string = strings.Fields(element)
 
-			t, err := parseTime(temp[1])
+			var process Process
+			var processed_string []string = strings.Fields(element)
+
+			_time, err := parseTime(processed_string[1])
 			if err != nil {
-
+				return nil
 			}
 
-			fmt.Println("Time: ", t.String())
+			process.name = processed_string[0]
+			process.time_start = _time
+			processes = append(processes, process)
 		}
 	}
 

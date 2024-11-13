@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os/exec"
 )
@@ -13,8 +12,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error running tasklist command: %v", err)
 	}
-	for _, element := range output {
-		fmt.Printf("Running processes:\n%s", element)
-	}
+
+	ParseProcesses(string(output))
 
 }

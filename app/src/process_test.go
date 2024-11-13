@@ -40,7 +40,7 @@ func TestTimeParser(t *testing.T) { // TODO: add fail cases where the function h
 func TestGatherProcesses(t *testing.T) {
 
 	// PROCESS SETS
-	process_set1 := []Process{
+	process_set1 := []Process{ //TODO: add more test cases
 		Process{
 			name:       "test.exe",
 			time_start: time.Date(2024, 11, 11, 13, 4, 54, 0, time.UTC),
