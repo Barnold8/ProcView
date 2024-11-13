@@ -82,5 +82,51 @@ func TestGatherProcesses(t *testing.T) {
 		})
 	}
 	// Actual testing
+}
+
+func TestRemoveDuplicates(t *testing.T) {
+
+	process_duplicates1 := []Process{
+		Process{
+			name:       "test.exe",
+			time_start: time.Date(2024, 11, 11, 13, 4, 54, 0, time.UTC),
+			time_alive: time.Duration(0),
+		},
+		Process{
+			name:       "test.exe",
+			time_start: time.Date(2024, 11, 11, 13, 4, 54, 0, time.UTC),
+			time_alive: time.Duration(0),
+		},
+	}
+
+	process_duplicates1_sorted := []Process{
+		Process{
+			name:       "test.exe",
+			time_start: time.Date(2024, 11, 11, 13, 4, 54, 0, time.UTC),
+			time_alive: time.Duration(0),
+		},
+	}
+
+	// TESTS
+	tests := []struct {
+		name     string
+		unsorted []Process
+		expected []Process
+	}{
+		{"Duplicates test 1", process_duplicates1, process_duplicates1_sorted},
+	}
+	// TESTS
+
+	for _, tc := range tests {
+
+		result := removeDuplicateProcesses(tc.unsorted)
+
+		if !(reflect.DeepEqual(tc.expected, result)) {
+			t.Errorf("sortProcess function did not correctly remove duplicates (removing duplicates)")
+		}
+
+	}
 
 }
+
+// if i ever want to make a function to sort the processes, make a test here

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os/exec"
 )
@@ -13,6 +14,10 @@ func main() {
 		log.Fatalf("Error running tasklist command: %v", err)
 	}
 
-	ParseProcesses(string(output))
+	unsorted := ParseProcesses(string(output))
+
+	sorted := removeDuplicateProcesses(unsorted)
+
+	fmt.Println(sorted)
 
 }
