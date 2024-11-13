@@ -77,7 +77,7 @@ func TestGatherProcesses(t *testing.T) {
 				}
 
 			} else {
-				t.Errorf("Expected some return data but got nil")
+				t.Errorf("Expected []Process but got nil")
 			}
 		})
 	}
