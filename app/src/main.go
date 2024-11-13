@@ -1,11 +1,18 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"os/exec"
 )
 
 func main() {
 
-	fmt.Println("Hello world!")
+	cmd := exec.Command("wmic.exe", "process", "get", "Caption,CreationDate")
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Fatalf("Error running tasklist command: %v", err)
+	}
+
+	ParseProcesses(string(output))
 
 }
