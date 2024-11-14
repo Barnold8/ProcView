@@ -9,7 +9,6 @@ type procWindow struct {
 	y         float32
 	width     float32
 	height    float32
-	title     string
 	dark_mode bool
 	app       fyne.App
 	window    fyne.Window
