@@ -6,7 +6,7 @@ type IWindowBuilder interface {
 }
 
 type ConcreteWindowBuilder struct {
-	processWindow procWindow
+	processWindow ProcWindow
 }
 
 func (w *ConcreteWindowBuilder) SetWindowPosition(x float32, y float32) IWindowBuilder {
