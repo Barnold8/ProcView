@@ -3,6 +3,7 @@ package main
 type IWindowBuilder interface {
 	SetWindowPosition(x float32, y float32) IWindowBuilder
 	SetWindowTitle(title string) IWindowBuilder
+	Build() ProcWindow
 }
 
 type ConcreteWindowBuilder struct {
