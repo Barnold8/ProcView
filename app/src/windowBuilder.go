@@ -21,4 +21,4 @@ func (w *ConcreteWindowBuilder) SetWindowTitle(title string) IWindowBuilder {
 	return w
 }
 
-func (w *ConcreteWindowBuilder) Build() procWindow { return w.processWindow }
+func (w *ConcreteWindowBuilder) Build() ProcWindow { return w.processWindow }
