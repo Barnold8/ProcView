@@ -13,7 +13,6 @@ type IWindowBuilder interface {
 	SetWindowTitle(title string) IWindowBuilder
 	SetWindowContainer(container *fyne.Container) IWindowBuilder
 	SetWindowSize(width float32, height float32) IWindowBuilder
-	SetDataContents(string_ptr *[]string) IWindowBuilder
 	Build() ProcWindow
 }
 
@@ -29,7 +28,6 @@ func (w *ConcreteWindowBuilder) InitialiseWindow() IWindowBuilder {
 
 func (w *ConcreteWindowBuilder) CheckInit() {
 	if w.processWindow.app == nil {
-
 		log.Fatal("Window is not initialised in memory, run InitialiseWindow() first")
 	}
 }
@@ -56,11 +54,6 @@ func (w *ConcreteWindowBuilder) SetWindowTitle(title string) IWindowBuilder {
 	return w
 }
 
-func (w *ConcreteWindowBuilder) SetDataContents(string_ptr *[]string) IWindowBuilder {
-
-	return w
-}
-
 func (w *ConcreteWindowBuilder) SetWindowContainer(container *fyne.Container) IWindowBuilder { // All of windows contents must be passed in here to have a functioning window!
 	w.CheckInit()
 	w.processWindow.window_contents = container
@@ -70,22 +63,9 @@ func (w *ConcreteWindowBuilder) SetWindowContainer(container *fyne.Container) IW
 func (w *ConcreteWindowBuilder) Build() ProcWindow {
 	w.CheckInit()
 
-	var width float32
-	var height float32
+	dimension_pair := ValidateDimensions(w.processWindow.width, w.processWindow.height)
 
-	if w.processWindow.width <= 0 {
-		width = 100
-	} else {
-		width = w.processWindow.width
-	}
-
-	if w.processWindow.height <= 0 {
-		height = 100
-	} else {
-		height = w.processWindow.height
-	}
-
-	w.processWindow.window.Resize(fyne.NewSize(width, height))
+	w.processWindow.window.Resize(fyne.NewSize(dimension_pair.a, dimension_pair.b))
 
 	if w.processWindow.window_contents != nil {
 		w.processWindow.window.SetContent(w.processWindow.window_contents)
