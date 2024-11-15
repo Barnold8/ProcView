@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 )
 
@@ -10,6 +11,7 @@ type IWindowBuilder interface {
 	InitialiseWindow() IWindowBuilder
 	SetWindowPosition(x float32, y float32) IWindowBuilder
 	SetWindowTitle(title string) IWindowBuilder
+	SetWindowContainer(container *fyne.Container) IWindowBuilder
 	Build() ProcWindow
 }
 
@@ -43,7 +45,17 @@ func (w *ConcreteWindowBuilder) SetWindowTitle(title string) IWindowBuilder {
 	return w
 }
 
+func (w *ConcreteWindowBuilder) SetWindowContainer(container *fyne.Container) IWindowBuilder { // All of windows contents must be passed in here to have a functioning window!
+	w.CheckInit()
+	w.processWindow.window_contents = container
+	return w
+}
+
 func (w *ConcreteWindowBuilder) Build() ProcWindow {
 	w.CheckInit()
+	if w.processWindow.window_contents != nil {
+		w.processWindow.window.SetContent(w.processWindow.window_contents)
+	}
+
 	return w.processWindow
 }
