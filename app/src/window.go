@@ -13,4 +13,5 @@ type ProcWindow struct {
 	is_init   bool
 	app       fyne.App
 	window    fyne.Window
+	data      []string // holds the list data
 }
