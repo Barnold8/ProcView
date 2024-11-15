@@ -27,3 +27,9 @@ func ValidateDimensions(width, height float32) Float32Pair { // all this because
 
 	return float_pair
 }
+
+type FuncPointerNoArgs func()
+
+type FuncPointerOneArgs func(T any)
+
+type FuncPointerTwoArgs func(T any, V any)
