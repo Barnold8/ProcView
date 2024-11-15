@@ -4,6 +4,7 @@ import (
 	"image/color"
 
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/data/binding"
 )
 
 type ProcWindow struct {
@@ -11,12 +12,9 @@ type ProcWindow struct {
 	y                float32
 	width            float32
 	height           float32
-	title            string
-	dark_mode        bool
-	is_init          bool
 	app              fyne.App
 	window           fyne.Window
-	data             []string // holds the list data
+	data             binding.ExternalStringList
 	background_color color.NRGBA
 	window_contents  *fyne.Container
 }

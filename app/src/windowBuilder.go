@@ -24,12 +24,12 @@ type ConcreteWindowBuilder struct {
 func (w *ConcreteWindowBuilder) InitialiseWindow() IWindowBuilder {
 	w.processWindow.app = app.New()
 	w.processWindow.window = w.processWindow.app.NewWindow("")
-	w.processWindow.is_init = true
 	return w
 }
 
 func (w *ConcreteWindowBuilder) CheckInit() {
-	if w.processWindow.is_init == false {
+	if w.processWindow.app == nil {
+
 		log.Fatal("Window is not initialised in memory, run InitialiseWindow() first")
 	}
 }
