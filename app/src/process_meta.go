@@ -57,10 +57,10 @@ func parseTime(timeStr string) (time.Time, error) {
 	return process_time, nil
 }
 
-func ParseProcesses(str string) []Process {
+func ParseProcesses(str string) map[string]Process {
 
-	var processes []Process
 	var split []string = strings.Split(str, "\n")
+	processes := make(map[string]Process)
 
 	for _, element := range split {
 
@@ -77,7 +77,8 @@ func ParseProcesses(str string) []Process {
 
 			process.name = processed_string[0]
 			process.time_start = _time
-			processes = append(processes, process)
+			// processes = append(processes, process)
+			processes[process.name] = process
 		}
 	}
 
@@ -96,31 +97,14 @@ func grabProcesses() []byte {
 
 func UpdateProcesses(processes []Process) []Process {
 
-	updated_processes := ParseProcesses(string(grabProcesses()))
-	updated_processes = removeDuplicateProcesses(updated_processes)
+	// updated_processes := ParseProcesses(string(grabProcesses()))
+	// updated_processes = removeDuplicateProcesses(updated_processes)
 
-	for i := range processes {
+	// for i := range processes {
 
-		fmt.Println(processes[i], " ", updated_processes[i])
+	// 	fmt.Println(processes[i], " ", updated_processes[i])
 
-	}
-
-	return processes
-}
-
-func removeDuplicateProcesses(unsortedProcesses []Process) []Process {
-
-	processes := make([]Process, 0, len(unsortedProcesses)) // allocate memory for n processes that already exist so we dont go over the limit
-	names := make(map[string]struct{})                      // make a map to look for keys only, we use a struct to fill the data field
-
-	for _, process := range unsortedProcesses { // for the processes in our unsorted slice
-
-		if _, exists := names[process.name]; !exists { // if the name doesnt exist
-			processes = append(processes, process) // add it to the new array
-			names[process.name] = struct{}{}       // add the name to the list of names
-		}
-
-	}
+	// }
 
 	return processes
 }
