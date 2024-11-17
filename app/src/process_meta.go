@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os/exec"
 	"regexp"
 	"strconv"
 	"strings"
@@ -77,6 +79,30 @@ func ParseProcesses(str string) []Process {
 			process.time_start = _time
 			processes = append(processes, process)
 		}
+	}
+
+	return processes
+}
+
+func grabProcesses() []byte {
+
+	cmd := exec.Command("wmic.exe", "process", "get", "Caption,CreationDate")
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Fatalf("Error running tasklist command: %v", err)
+	}
+	return output
+}
+
+func UpdateProcesses(processes []Process) []Process {
+
+	updated_processes := ParseProcesses(string(grabProcesses()))
+	updated_processes = removeDuplicateProcesses(updated_processes)
+
+	for i := range processes {
+
+		fmt.Println(processes[i], " ", updated_processes[i])
+
 	}
 
 	return processes
