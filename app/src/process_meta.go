@@ -77,7 +77,6 @@ func ParseProcesses(str string) map[string]Process {
 
 			process.name = processed_string[0]
 			process.time_start = _time
-			// processes = append(processes, process)
 			processes[process.name] = process
 		}
 	}
@@ -95,16 +94,31 @@ func grabProcesses() []byte {
 	return output
 }
 
-func UpdateProcesses(processes []Process) []Process {
+func UpdateProcesses(processes map[string]Process) map[string]Process {
 
-	// updated_processes := ParseProcesses(string(grabProcesses()))
-	// updated_processes = removeDuplicateProcesses(updated_processes)
+	updated_processes := make(map[string]Process)
 
-	// for i := range processes {
+	grabbed := ParseProcesses(string(grabProcesses()))
 
-	// 	fmt.Println(processes[i], " ", updated_processes[i])
+	for key := range processes {
 
-	// }
+		var elasped_time time.Duration
 
-	return processes
+		_, exists := grabbed[key]
+
+		if exists {
+
+			elasped_time = time.Since(grabbed[key].time_start)
+			updated_processes[key] = Process{
+				grabbed[key].name,
+				grabbed[key].time_start,
+				elasped_time,
+			}
+
+			fmt.Printf("Process %s | time %s\n", grabbed[key].name, elasped_time)
+
+		}
+	}
+
+	return updated_processes
 }
