@@ -37,7 +37,7 @@ func TestTimeParser(t *testing.T) { // TODO: add fail cases where the function h
 
 }
 
-func TestGatherProcesses(t *testing.T) { // TODO: change this to reflect hashmap
+func TestGatherProcesses(t *testing.T) {
 
 	process_set1 := make(map[string]Process)
 	process_set2 := make(map[string]Process)
@@ -125,6 +125,10 @@ func TestGatherProcesses(t *testing.T) { // TODO: change this to reflect hashmap
 		})
 	}
 	// Actual testing
+}
+
+func TestUpdateProcesses(t *testing.T) {
+
 }
 
 // if i ever want to make a function to sort the processes, make a test here
