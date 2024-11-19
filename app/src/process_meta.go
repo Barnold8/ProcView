@@ -97,7 +97,7 @@ func grabProcesses() []byte {
 
 func UpdateProcesses(processes map[string]Process, now time.Time, current_processes string) map[string]Process {
 	updated_processes := make(map[string]Process)
-	grabbed := ParseProcesses(string(grabProcesses()))
+	grabbed := ParseProcesses(current_processes)
 
 	for key := range processes {
 		var elapsed_time time.Duration
