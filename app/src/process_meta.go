@@ -104,11 +104,11 @@ func UpdateProcesses(processes map[string]Process, now time.Time, current_proces
 		_, exists := grabbed[key]
 
 		if exists {
-			elapsed_time = now.Sub(grabbed[key].time_start) // Use the injected `now` function
+			elapsed_time = now.Sub(grabbed[key].time_start)
 			updated_processes[key] = Process{
 				grabbed[key].name,
 				grabbed[key].time_start,
-				elapsed_time,
+				elapsed_time.Abs(),
 			}
 
 		}
