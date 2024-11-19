@@ -78,6 +78,7 @@ func ParseProcesses(str string) map[string]Process {
 			process.name = processed_string[0]
 			process.time_start = _time
 			processes[process.name] = process
+
 		}
 	}
 
@@ -94,28 +95,21 @@ func grabProcesses() []byte {
 	return output
 }
 
-func UpdateProcesses(processes map[string]Process) map[string]Process {
-
+func UpdateProcesses(processes map[string]Process, now time.Time, current_processes string) map[string]Process {
 	updated_processes := make(map[string]Process)
-
 	grabbed := ParseProcesses(string(grabProcesses()))
 
 	for key := range processes {
-
-		var elasped_time time.Duration
-
+		var elapsed_time time.Duration
 		_, exists := grabbed[key]
 
 		if exists {
-
-			elasped_time = time.Since(grabbed[key].time_start)
+			elapsed_time = now.Sub(grabbed[key].time_start) // Use the injected `now` function
 			updated_processes[key] = Process{
 				grabbed[key].name,
 				grabbed[key].time_start,
-				elasped_time,
+				elapsed_time,
 			}
-
-			fmt.Printf("Process %s | time %s\n", grabbed[key].name, elasped_time)
 
 		}
 	}
