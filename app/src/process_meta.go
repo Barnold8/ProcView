@@ -116,3 +116,13 @@ func UpdateProcesses(processes map[string]Process, now time.Time, current_proces
 
 	return updated_processes
 }
+
+func ProcessMapToString(processes map[string]Process) string {
+	var builder strings.Builder
+
+	for _, value := range processes {
+		builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", value.name, value.time_start, value.time_alive))
+	}
+
+	return builder.String()
+}
