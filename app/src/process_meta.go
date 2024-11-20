@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os/exec"
 	"regexp"
 	"strconv"
 	"strings"
@@ -55,10 +57,10 @@ func parseTime(timeStr string) (time.Time, error) {
 	return process_time, nil
 }
 
-func ParseProcesses(str string) []Process {
+func ParseProcesses(str string) map[string]Process {
 
-	var processes []Process
 	var split []string = strings.Split(str, "\n")
+	processes := make(map[string]Process)
 
 	for _, element := range split {
 
@@ -75,26 +77,42 @@ func ParseProcesses(str string) []Process {
 
 			process.name = processed_string[0]
 			process.time_start = _time
-			processes = append(processes, process)
+			processes[process.name] = process
+
 		}
 	}
 
 	return processes
 }
 
-func removeDuplicateProcesses(unsortedProcesses []Process) []Process {
+func grabProcesses() []byte {
 
-	processes := make([]Process, 0, len(unsortedProcesses)) // allocate memory for n processes that already exist so we dont go over the limit
-	names := make(map[string]struct{})                      // make a map to look for keys only, we use a struct to fill the data field
+	cmd := exec.Command("wmic.exe", "process", "get", "Caption,CreationDate")
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Fatalf("Error running tasklist command: %v", err)
+	}
+	return output
+}
 
-	for _, process := range unsortedProcesses { // for the processes in our unsorted slice
+func UpdateProcesses(processes map[string]Process, now time.Time, current_processes string) map[string]Process {
+	updated_processes := make(map[string]Process)
+	grabbed := ParseProcesses(current_processes)
 
-		if _, exists := names[process.name]; !exists { // if the name doesnt exist
-			processes = append(processes, process) // add it to the new array
-			names[process.name] = struct{}{}       // add the name to the list of names
+	for key := range processes {
+		var elapsed_time time.Duration
+		_, exists := grabbed[key]
+
+		if exists {
+			elapsed_time = now.Sub(grabbed[key].time_start)
+			updated_processes[key] = Process{
+				grabbed[key].name,
+				grabbed[key].time_start,
+				elapsed_time.Abs(),
+			}
+
 		}
-
 	}
 
-	return processes
+	return updated_processes
 }
