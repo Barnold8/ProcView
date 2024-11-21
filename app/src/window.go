@@ -39,7 +39,7 @@ func AppendData(previous_data binding.ExternalStringList, processes map[string]P
 
 	for {
 
-		processData := ProcessMapToString(UpdateProcesses(processes, time.Now(), string(grabProcesses())))
+		processData := ProcessMapToStringSortedByName(UpdateProcesses(processes, time.Now(), string(grabProcesses())), false)
 		// fmt.Println(processData)
 
 		err := previous_data.Set(append([]string{"Name, Start, Time"}, strings.Split(processData, "\n")...))
