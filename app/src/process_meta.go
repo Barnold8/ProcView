@@ -5,6 +5,7 @@ import (
 	"log"
 	"os/exec"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -118,10 +119,28 @@ func UpdateProcesses(processes map[string]Process, now time.Time, current_proces
 }
 
 func ProcessMapToString(processes map[string]Process) string {
+
+	// TODO:
+
+	// Add sorting via param (boolean) to sort by name of processes (keys of hashmap)
+	// Add a date | time part of the builder string, rather than date and time being its own sub element
+
+	keys := make([]string, 0, len(processes))
+
+	for key := range processes {
+		keys = append(keys, key)
+	}
+
+	sort.Strings(keys)
+
 	var builder strings.Builder
 
-	for _, value := range processes {
-		builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", value.name, value.time_start, value.time_alive))
+	// for _, value := range processes {
+	//
+	// }
+
+	for _, key := range keys {
+		builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[key].name, processes[key].time_start, processes[key].time_alive))
 	}
 
 	return builder.String()
