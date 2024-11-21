@@ -147,11 +147,9 @@ func ProcessMapToString(processes map[string]Process) string {
 
 func ProcessMapToStringSortedByName(processes map[string]Process, inverse bool) string {
 
-	keys := extractKeys(processes)
-
-	sort.Strings(keys)
-
 	var builder strings.Builder
+	keys := extractKeys(processes)
+	sort.Strings(keys)
 
 	if inverse {
 		for i := len(keys) - 1; i >= 0; i-- {
