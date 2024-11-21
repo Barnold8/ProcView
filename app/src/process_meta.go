@@ -9,12 +9,20 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode"
 )
 
 type Process struct {
 	name       string
 	time_start time.Time     // This was needed for testing...
 	time_alive time.Duration // if theres a time struct, use this
+}
+
+func capitalizeFirstLetter(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return string(unicode.ToUpper(rune(s[0]))) + s[1:]
 }
 
 func parseTime(timeStr string) (time.Time, error) {
@@ -76,7 +84,7 @@ func ParseProcesses(str string) map[string]Process {
 				return nil
 			}
 
-			process.name = processed_string[0]
+			process.name = capitalizeFirstLetter(processed_string[0])
 			process.time_start = _time
 			processes[process.name] = process
 
