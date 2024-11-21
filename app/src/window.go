@@ -45,7 +45,7 @@ func AppendData(previous_data binding.ExternalStringList, processes map[string]P
 		err := previous_data.Set(append([]string{"Name, Start, Time"}, strings.Split(processData, "\n")...))
 
 		if err != nil {
-
+			// TODO, make a proper exception here
 			panic(err)
 		}
 	}
