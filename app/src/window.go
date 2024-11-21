@@ -2,10 +2,13 @@ package main
 
 import (
 	"image/color"
+	"strings"
+	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -30,4 +33,20 @@ func CreateBox() *fyne.Container {
 
 	// Combine background and label into a single container
 	return container.NewStack(rect, label)
+}
+
+func AppendData(previous_data binding.ExternalStringList, processes map[string]Process) {
+
+	for {
+
+		processData := ProcessMapToString(UpdateProcesses(processes, time.Now(), string(grabProcesses())))
+		// fmt.Println(processData)
+
+		err := previous_data.Set(append([]string{"Name, Start, Time"}, strings.Split(processData, "\n")...))
+
+		if err != nil {
+
+			panic(err)
+		}
+	}
 }

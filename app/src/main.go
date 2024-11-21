@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"image/color"
 	"strings"
-	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -13,25 +11,9 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func appendData(previous_data binding.ExternalStringList, processes map[string]Process) {
-
-	for {
-
-		processData := ProcessMapToString(UpdateProcesses(processes, time.Now(), string(grabProcesses())))
-		fmt.Println(processData)
-
-		err := previous_data.Set(append([]string{"Name, Start, Time"}, strings.Split(processData, "\n")...))
-
-		if err != nil {
-
-			panic(err)
-		}
-	}
-}
-
 func main() {
 
-	myFunc := appendData
+	myFunc := AppendData
 
 	data := binding.BindStringList(
 		&[]string{ProcessMapToString(ParseProcesses(string(grabProcesses())))},
