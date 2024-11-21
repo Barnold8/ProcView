@@ -337,6 +337,10 @@ func TestUpdateProcesses(t *testing.T) {
 
 }
 
+func capitalizeFirstLetterTest(t *testing.T) {
+
+}
+
 func extractKeysTest(t *testing.T) {
 
 }
