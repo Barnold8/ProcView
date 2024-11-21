@@ -337,4 +337,14 @@ func TestUpdateProcesses(t *testing.T) {
 
 }
 
-// if i ever want to make a function to sort the processes, make a test here
+func extractKeysTest(t *testing.T) {
+
+}
+
+func ProcessMapToStringTest(t *testing.T) {
+
+}
+
+func ProcessMapToStringSortedByNameTest(t *testing.T) {
+
+}

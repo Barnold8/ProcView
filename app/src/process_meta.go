@@ -134,6 +134,8 @@ func extractKeys(processes map[string]Process) []string {
 	return keys
 }
 
+// Process to string functions
+
 func ProcessMapToString(processes map[string]Process) string {
 
 	var builder strings.Builder
@@ -164,3 +166,15 @@ func ProcessMapToStringSortedByName(processes map[string]Process, inverse bool) 
 
 	return builder.String()
 }
+
+func ProcessMapToStringSortedByTimeStarted(processes map[string]Process, inverse bool) string {
+
+	return "Write me"
+}
+
+func ProcessMapToStringSortedByTimeAlive(processes map[string]Process, inverse bool) string {
+
+	return "Write me"
+}
+
+// Process to string functions
