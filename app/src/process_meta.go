@@ -118,12 +118,12 @@ func UpdateProcesses(processes map[string]Process, now time.Time, current_proces
 	return updated_processes
 }
 
-func ProcessMapToString(processes map[string]Process) string {
+// TODO:
 
-	// TODO:
+// Add a date | time part of the builder string, rather than date and time being its own sub element
+// Add function to sort by process attributes, one for time started, one for time alive
 
-	// Add sorting via param (boolean) to sort by name of processes (keys of hashmap)
-	// Add a date | time part of the builder string, rather than date and time being its own sub element
+func extractKeys(processes map[string]Process) []string {
 
 	keys := make([]string, 0, len(processes))
 
@@ -131,16 +131,37 @@ func ProcessMapToString(processes map[string]Process) string {
 		keys = append(keys, key)
 	}
 
+	return keys
+}
+
+func ProcessMapToString(processes map[string]Process) string {
+
+	var builder strings.Builder
+
+	for _, value := range processes {
+		builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", value.name, value.time_start, value.time_alive))
+	}
+
+	return builder.String()
+}
+
+func ProcessMapToStringSortedByName(processes map[string]Process, inverse bool) string {
+
+	keys := extractKeys(processes)
+
 	sort.Strings(keys)
 
 	var builder strings.Builder
 
-	// for _, value := range processes {
-	//
-	// }
+	if inverse {
+		for i := len(keys) - 1; i >= 0; i-- {
+			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[keys[i]].name, processes[keys[i]].time_start, processes[keys[i]].time_alive))
+		}
 
-	for _, key := range keys {
-		builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[key].name, processes[key].time_start, processes[key].time_alive))
+	} else {
+		for _, key := range keys {
+			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[key].name, processes[key].time_start, processes[key].time_alive))
+		}
 	}
 
 	return builder.String()
