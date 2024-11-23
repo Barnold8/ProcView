@@ -337,11 +337,31 @@ func TestUpdateProcesses(t *testing.T) {
 
 }
 
-func capitalizeFirstLetterTest(t *testing.T) {
+func CapitalizeFirstLetterTest(t *testing.T) {
+
+	tests := []struct {
+		name     string
+		lowered  string
+		expected string
+	}{
+		{"Test 1", "test", "Test"},
+		{"Test 2", "foo", "foo"},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+
+			result := capitalizeFirstLetter(tc.lowered)
+
+			if result != tc.expected {
+				t.Errorf("String (%s) was not capitalised correctly. %s was supposed to be returned but got %s", tc.lowered, tc.expected, result)
+			}
+		})
+	}
 
 }
 
-func extractKeysTest(t *testing.T) {
+func ExtractKeysTest(t *testing.T) {
 
 }
 
