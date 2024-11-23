@@ -344,7 +344,7 @@ func TestCapitalizeFirstLetter(t *testing.T) {
 		expected string
 	}{
 		{"Test 1", "test", "Test"},
-		{"Test 2", "foo", "foo"},
+		{"Test 2", "foo", "Foo"},
 	}
 
 	for _, tc := range tests {
