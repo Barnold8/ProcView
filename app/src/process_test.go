@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"reflect"
+	"sort"
 	"testing"
 	"time"
 )
@@ -345,6 +346,17 @@ func TestCapitalizeFirstLetter(t *testing.T) {
 	}{
 		{"Test 1", "test", "Test"},
 		{"Test 2", "foo", "Foo"},
+		{"Test 3", "bar", "Bar"},
+		{"Test 4", "Bar", "Bar"},
+		{"Test 5", "b", "B"},
+		{"Test 6", "B", "B"},
+		{"Test 7", "", ""},
+		{"Test 8", ",", ","},
+		{"Test 9", "./';a", "./';a"},
+		{"Test 10", "this is a long sentence for testing, i hope you like it", "This is a long sentence for testing, i hope you like it"},
+		{"Test 11", "abcdefg", "Abcdefg"},
+		{"Test 12", "steven", "Steven"},
+		{"Test 13", "apple", "Apple"},
 	}
 
 	for _, tc := range tests {
@@ -362,6 +374,49 @@ func TestCapitalizeFirstLetter(t *testing.T) {
 
 func TestExtractKeys(t *testing.T) {
 
+	keySet1 := map[string]Process{
+		"A": {}, "B": {}, "C": {}, "D": {}, "E": {}, "F": {},
+		"G": {}, "H": {}, "I": {}, "J": {}, "K": {}, "L": {},
+	}
+	keys1 := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"}
+
+	keySet2 := map[string]Process{
+		"foo": {}, "bar": {}, "temp": {}, "test": {},
+	}
+	keys2 := []string{"foo", "bar", "temp", "test"}
+
+	keySet3 := map[string]Process{}
+	keys3 := []string{}
+
+	keySet4 := map[string]Process{
+		"One": {}, "Two": {}, "Three": {}, "four": {},
+	}
+	keys4 := []string{"One", "Two", "Three", "four"}
+
+	tests := []struct {
+		name     string
+		keys     map[string]Process
+		expected []string
+	}{
+		{"Test 1", keySet1, keys1},
+		{"Test 2", keySet2, keys2},
+		{"Test 3", keySet3, keys3},
+		{"Test 4", keySet4, keys4},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+
+			result := extractKeys(tc.keys)
+
+			sort.Strings(result)
+			sort.Strings(tc.expected)
+
+			if !reflect.DeepEqual(result, tc.expected) {
+				t.Errorf("Failed %s: expected %v, got %v", tc.name, tc.expected, result)
+			}
+		})
+	}
 }
 
 func TestProcessMapToString(t *testing.T) {
