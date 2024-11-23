@@ -63,59 +63,58 @@ func TestGatherProcesses(t *testing.T) {
 	process_set1 := make(map[string]Process)
 	process_set2 := make(map[string]Process)
 
-	process_set1["test.exe"] = Process{
-		name:       "test.exe",
+	process_set1["Test.exe"] = Process{
+		name:       "Test.exe",
 		time_start: time.Date(2024, 11, 11, 13, 4, 54, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-
-	process_set2["example.exe"] = Process{
-		name:       "example.exe",
+	process_set2["Example.exe"] = Process{
+		name:       "Example.exe",
 		time_start: time.Date(2024, 11, 19, 12, 15, 32, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2["program.exe"] = Process{
-		name:       "program.exe",
+	process_set2["Program.exe"] = Process{
+		name:       "Program.exe",
 		time_start: time.Date(2024, 10, 31, 23, 45, 12, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2["test_app.exe"] = Process{
-		name:       "test_app.exe",
+	process_set2["Test_app.exe"] = Process{
+		name:       "Test_app.exe",
 		time_start: time.Date(2024, 9, 20, 14, 30, 45, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2["my_script.exe"] = Process{
-		name:       "my_script.exe",
+	process_set2["My_script.exe"] = Process{
+		name:       "My_script.exe",
 		time_start: time.Date(2024, 11, 1, 8, 45, 59, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2["utility_tool.exe"] = Process{
-		name:       "utility_tool.exe",
+	process_set2["Utility_tool.exe"] = Process{
+		name:       "Utility_tool.exe",
 		time_start: time.Date(2024, 11, 10, 10, 12, 34, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2["helper.exe"] = Process{
-		name:       "helper.exe",
+	process_set2["Helper.exe"] = Process{
+		name:       "Helper.exe",
 		time_start: time.Date(2024, 11, 19, 15, 0, 22, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2["benchmark.exe"] = Process{
-		name:       "benchmark.exe",
+	process_set2["Benchmark.exe"] = Process{
+		name:       "Benchmark.exe",
 		time_start: time.Date(2024, 8, 15, 9, 30, 11, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2["diagnostic.exe"] = Process{
-		name:       "diagnostic.exe",
+	process_set2["Diagnostic.exe"] = Process{
+		name:       "Diagnostic.exe",
 		time_start: time.Date(2024, 11, 19, 7, 45, 1, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2["update.exe"] = Process{
-		name:       "update.exe",
+	process_set2["Update.exe"] = Process{
+		name:       "Update.exe",
 		time_start: time.Date(2024, 7, 10, 12, 34, 56, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2["debugger.exe"] = Process{
-		name:       "debugger.exe",
+	process_set2["Debugger.exe"] = Process{
+		name:       "Debugger.exe",
 		time_start: time.Date(2024, 11, 19, 18, 30, 12, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
@@ -160,14 +159,14 @@ func TestUpdateProcesses(t *testing.T) {
 	process_set2 := make(map[string]Process)
 
 	// SET 1
-	process_set1_start["test.exe"] = Process{
-		name:       "test.exe",
+	process_set1_start["Test.exe"] = Process{
+		name:       "Test.exe",
 		time_start: time.Date(2024, 11, 11, 13, 4, 54, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
 
-	process_set1["test.exe"] = Process{
-		name:       "test.exe",
+	process_set1["Test.exe"] = Process{
+		name:       "Test.exe",
 		time_start: time.Date(2024, 11, 11, 13, 4, 54, 0, time.UTC),
 		time_alive: func() time.Duration {
 			duration, _ := time.ParseDuration("253h19m42s")
@@ -177,133 +176,133 @@ func TestUpdateProcesses(t *testing.T) {
 	// SET 1
 
 	// SET 2
-	process_set2_start["example.exe"] = Process{
-		name:       "example.exe",
+	process_set2_start["Example.exe"] = Process{
+		name:       "Example.exe",
 		time_start: time.Date(2024, 11, 19, 12, 15, 32, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2_start["program.exe"] = Process{
-		name:       "program.exe",
+	process_set2_start["Program.exe"] = Process{
+		name:       "Program.exe",
 		time_start: time.Date(2024, 10, 31, 23, 45, 12, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2_start["test_app.exe"] = Process{
-		name:       "test_app.exe",
+	process_set2_start["Test_app.exe"] = Process{
+		name:       "Test_app.exe",
 		time_start: time.Date(2024, 9, 20, 14, 30, 45, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2_start["my_script.exe"] = Process{
-		name:       "my_script.exe",
+	process_set2_start["My_script.exe"] = Process{
+		name:       "My_script.exe",
 		time_start: time.Date(2024, 11, 1, 8, 45, 59, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2_start["utility_tool.exe"] = Process{
-		name:       "utility_tool.exe",
+	process_set2_start["Utility_tool.exe"] = Process{
+		name:       "Utility_tool.exe",
 		time_start: time.Date(2024, 11, 10, 10, 12, 34, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2_start["helper.exe"] = Process{
-		name:       "helper.exe",
+	process_set2_start["Helper.exe"] = Process{
+		name:       "Helper.exe",
 		time_start: time.Date(2024, 11, 19, 15, 0, 22, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2_start["benchmark.exe"] = Process{
-		name:       "benchmark.exe",
+	process_set2_start["Benchmark.exe"] = Process{
+		name:       "Benchmark.exe",
 		time_start: time.Date(2024, 8, 15, 9, 30, 11, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2_start["diagnostic.exe"] = Process{
-		name:       "diagnostic.exe",
+	process_set2_start["Diagnostic.exe"] = Process{
+		name:       "Diagnostic.exe",
 		time_start: time.Date(2024, 11, 19, 7, 45, 1, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2_start["update.exe"] = Process{
-		name:       "update.exe",
+	process_set2_start["Update.exe"] = Process{
+		name:       "Update.exe",
 		time_start: time.Date(2024, 7, 10, 12, 34, 56, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
-	process_set2_start["debugger.exe"] = Process{
-		name:       "debugger.exe",
+	process_set2_start["Debugger.exe"] = Process{
+		name:       "Debugger.exe",
 		time_start: time.Date(2024, 11, 19, 18, 30, 12, 0, time.UTC),
 		time_alive: time.Duration(0),
 	}
 
 	// ===
 
-	process_set2["example.exe"] = Process{
-		name:       "example.exe",
+	process_set2["Example.exe"] = Process{
+		name:       "Example.exe",
 		time_start: time.Date(2024, 11, 19, 12, 15, 32, 0, time.UTC),
 		time_alive: func() time.Duration {
 			duration, _ := time.ParseDuration("444h30m20s")
 			return duration
 		}(),
 	}
-	process_set2["program.exe"] = Process{
-		name:       "program.exe",
+	process_set2["Program.exe"] = Process{
+		name:       "Program.exe",
 		time_start: time.Date(2024, 10, 31, 23, 45, 12, 0, time.UTC),
 		time_alive: func() time.Duration {
 			duration, _ := time.ParseDuration("0s")
 			return duration
 		}(),
 	}
-	process_set2["test_app.exe"] = Process{
-		name:       "test_app.exe",
+	process_set2["Test_app.exe"] = Process{
+		name:       "Test_app.exe",
 		time_start: time.Date(2024, 9, 20, 14, 30, 45, 0, time.UTC),
 		time_alive: func() time.Duration {
 			duration, _ := time.ParseDuration("993h14m27s")
 			return duration
 		}(),
 	}
-	process_set2["my_script.exe"] = Process{
-		name:       "my_script.exe",
+	process_set2["My_script.exe"] = Process{
+		name:       "My_script.exe",
 		time_start: time.Date(2024, 11, 1, 8, 45, 59, 0, time.UTC),
 		time_alive: func() time.Duration {
 			duration, _ := time.ParseDuration("9h0m47s")
 			return duration
 		}(),
 	}
-	process_set2["utility_tool.exe"] = Process{
-		name:       "utility_tool.exe",
+	process_set2["Utility_tool.exe"] = Process{
+		name:       "Utility_tool.exe",
 		time_start: time.Date(2024, 11, 10, 10, 12, 34, 0, time.UTC),
 		time_alive: func() time.Duration {
 			duration, _ := time.ParseDuration("226h27m22s")
 			return duration
 		}(),
 	}
-	process_set2["helper.exe"] = Process{
-		name:       "helper.exe",
+	process_set2["Helper.exe"] = Process{
+		name:       "Helper.exe",
 		time_start: time.Date(2024, 11, 19, 15, 0, 22, 0, time.UTC),
 		time_alive: func() time.Duration {
 			duration, _ := time.ParseDuration("447h15m10s")
 			return duration
 		}(),
 	}
-	process_set2["benchmark.exe"] = Process{
-		name:       "benchmark.exe",
+	process_set2["Benchmark.exe"] = Process{
+		name:       "Benchmark.exe",
 		time_start: time.Date(2024, 8, 15, 9, 30, 11, 0, time.UTC),
 		time_alive: func() time.Duration {
 			duration, _ := time.ParseDuration("1862h15m1s")
 			return duration
 		}(),
 	}
-	process_set2["diagnostic.exe"] = Process{
-		name:       "diagnostic.exe",
+	process_set2["Diagnostic.exe"] = Process{
+		name:       "Diagnostic.exe",
 		time_start: time.Date(2024, 11, 19, 7, 45, 1, 0, time.UTC),
 		time_alive: func() time.Duration {
 			duration, _ := time.ParseDuration("439h59m49s")
 			return duration
 		}(),
 	}
-	process_set2["update.exe"] = Process{
-		name:       "update.exe",
+	process_set2["Update.exe"] = Process{
+		name:       "Update.exe",
 		time_start: time.Date(2024, 7, 10, 12, 34, 56, 0, time.UTC),
 		time_alive: func() time.Duration {
 			duration, _ := time.ParseDuration("2723h10m16s")
 			return duration
 		}(),
 	}
-	process_set2["debugger.exe"] = Process{
-		name:       "debugger.exe",
+	process_set2["Debugger.exe"] = Process{
+		name:       "Debugger.exe",
 		time_start: time.Date(2024, 11, 19, 18, 30, 12, 0, time.UTC),
 		time_alive: func() time.Duration {
 			duration, _ := time.ParseDuration("450h45m0s")
@@ -337,7 +336,7 @@ func TestUpdateProcesses(t *testing.T) {
 
 }
 
-func CapitalizeFirstLetterTest(t *testing.T) {
+func TestCapitalizeFirstLetter(t *testing.T) {
 
 	tests := []struct {
 		name     string
@@ -361,22 +360,22 @@ func CapitalizeFirstLetterTest(t *testing.T) {
 
 }
 
-func ExtractKeysTest(t *testing.T) {
+func TestExtractKeys(t *testing.T) {
 
 }
 
-func ProcessMapToStringTest(t *testing.T) {
+func TestProcessMapToString(t *testing.T) {
 
 }
 
-func ProcessMapToStringSortedByNameTest(t *testing.T) {
+func TestProcessMapToStringSortedByName(t *testing.T) {
 
 }
 
-func ProcessMapToStringSortedByTimeAliveTest(t *testing.T) {
+func TestProcessMapToStringSortedByTimeAlive(t *testing.T) {
 
 }
 
-func ProcessMapToStringSortedByTimeStartedTest(t *testing.T) {
+func TestProcessMapToStringSortedByTimeStarted(t *testing.T) {
 
 }
