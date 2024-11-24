@@ -684,10 +684,10 @@ func TestProcessMapToStringSortedByTimeAlive(t *testing.T) {
 		}(),
 	}
 
-	process_set1_string1 := ""
-	process_set1_string2 := ""
-	process_set2_string1 := ""
-	process_set2_string2 := ""
+	process_set1_string1 := "Program.exe, 2024-10-31 23:45:12 +0000 UTC, 0s,\nMy_script.exe, 2024-11-01 08:45:59 +0000 UTC, 9h0m47s,\nUtility_tool.exe, 2024-11-10 10:12:34 +0000 UTC, 226h27m22s,\nDiagnostic.exe, 2024-11-19 07:45:01 +0000 UTC, 439h59m49s,\nExample.exe, 2024-11-19 12:15:32 +0000 UTC, 444h30m20s,\nHelper.exe, 2024-11-19 15:00:22 +0000 UTC, 447h15m10s,\nDebugger.exe, 2024-11-19 18:30:12 +0000 UTC, 450h45m0s,\nTest_app.exe, 2024-09-20 14:30:45 +0000 UTC, 993h14m27s,\nBenchmark.exe, 2024-08-15 09:30:11 +0000 UTC, 1862h15m1s,\nUpdate.exe, 2024-07-10 12:34:56 +0000 UTC, 2723h10m16s,\n"
+	process_set1_string2 := "Update.exe, 2024-07-10 12:34:56 +0000 UTC, 2723h10m16s,\nBenchmark.exe, 2024-08-15 09:30:11 +0000 UTC, 1862h15m1s,\nTest_app.exe, 2024-09-20 14:30:45 +0000 UTC, 993h14m27s,\nDebugger.exe, 2024-11-19 18:30:12 +0000 UTC, 450h45m0s,\nHelper.exe, 2024-11-19 15:00:22 +0000 UTC, 447h15m10s,\nExample.exe, 2024-11-19 12:15:32 +0000 UTC, 444h30m20s,\nDiagnostic.exe, 2024-11-19 07:45:01 +0000 UTC, 439h59m49s,\nUtility_tool.exe, 2024-11-10 10:12:34 +0000 UTC, 226h27m22s,\nMy_script.exe, 2024-11-01 08:45:59 +0000 UTC, 9h0m47s,\nProgram.exe, 2024-10-31 23:45:12 +0000 UTC, 0s,\n"
+	process_set2_string1 := "Tool.exe, 2024-11-24 06:15:00 +0000 UTC, 30m0s,\nApp1.exe, 2024-11-24 14:30:00 +0000 UTC, 2h15m0s,\nService.exe, 2024-11-23 09:00:00 +0000 UTC, 48h30m0s,\n"
+	process_set2_string2 := "Service.exe, 2024-11-23 09:00:00 +0000 UTC, 48h30m0s,\nApp1.exe, 2024-11-24 14:30:00 +0000 UTC, 2h15m0s,\nTool.exe, 2024-11-24 06:15:00 +0000 UTC, 30m0s,\n"
 	process_set3_string1 := ""
 	process_set3_string2 := ""
 
@@ -708,14 +708,14 @@ func TestProcessMapToStringSortedByTimeAlive(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 
 			if i%2 == 0 {
-				result := ProcessMapToStringSortedByTimeAlive(tc.processes, true)
-				if tc.expected != result {
-					t.Errorf("result \n%s ", result)
-				}
-			} else {
 				result := ProcessMapToStringSortedByTimeAlive(tc.processes, false)
 				if tc.expected != result {
-					t.Errorf("result \n%s ", result)
+					t.Errorf("\nExpected\n\n%s \n\n\nbut got result \n\n%s\n\n", tc.expected, result)
+				}
+			} else {
+				result := ProcessMapToStringSortedByTimeAlive(tc.processes, true)
+				if tc.expected != result {
+					t.Errorf("\nExpected\n\n%s but got result \n\n%s\n\n", tc.expected, result)
 				}
 			}
 
@@ -723,6 +723,7 @@ func TestProcessMapToStringSortedByTimeAlive(t *testing.T) {
 	}
 
 }
+
 func TestProcessMapToStringSortedByTimeStarted(t *testing.T) {
 
 	process_set1 := make(map[string]Process)
@@ -837,10 +838,10 @@ func TestProcessMapToStringSortedByTimeStarted(t *testing.T) {
 		}(),
 	}
 
-	process_set1_string1 := ""
-	process_set1_string2 := ""
-	process_set2_string1 := ""
-	process_set2_string2 := ""
+	process_set1_string1 := "Debugger.exe, 2024-11-19 18:30:12 +0000 UTC, 450h45m0s,\nHelper.exe, 2024-11-19 15:00:22 +0000 UTC, 447h15m10s,\nExample.exe, 2024-11-19 12:15:32 +0000 UTC, 444h30m20s,\nDiagnostic.exe, 2024-11-19 07:45:01 +0000 UTC, 439h59m49s,\nUtility_tool.exe, 2024-11-10 10:12:34 +0000 UTC, 226h27m22s,\nMy_script.exe, 2024-11-01 08:45:59 +0000 UTC, 9h0m47s,\nProgram.exe, 2024-10-31 23:45:12 +0000 UTC, 0s,\nTest_app.exe, 2024-09-20 14:30:45 +0000 UTC, 993h14m27s,\nBenchmark.exe, 2024-08-15 09:30:11 +0000 UTC, 1862h15m1s,\nUpdate.exe, 2024-07-10 12:34:56 +0000 UTC, 2723h10m16s,\n"
+	process_set1_string2 := "Update.exe, 2024-07-10 12:34:56 +0000 UTC, 2723h10m16s,\nBenchmark.exe, 2024-08-15 09:30:11 +0000 UTC, 1862h15m1s,\nTest_app.exe, 2024-09-20 14:30:45 +0000 UTC, 993h14m27s,\nProgram.exe, 2024-10-31 23:45:12 +0000 UTC, 0s,\nMy_script.exe, 2024-11-01 08:45:59 +0000 UTC, 9h0m47s,\nUtility_tool.exe, 2024-11-10 10:12:34 +0000 UTC, 226h27m22s,\nDiagnostic.exe, 2024-11-19 07:45:01 +0000 UTC, 439h59m49s,\nExample.exe, 2024-11-19 12:15:32 +0000 UTC, 444h30m20s,\nHelper.exe, 2024-11-19 15:00:22 +0000 UTC, 447h15m10s,\nDebugger.exe, 2024-11-19 18:30:12 +0000 UTC, 450h45m0s,\n"
+	process_set2_string1 := "App1.exe, 2024-11-24 14:30:00 +0000 UTC, 2h15m0s,\nTool.exe, 2024-11-24 06:15:00 +0000 UTC, 30m0s,\nService.exe, 2024-11-23 09:00:00 +0000 UTC, 48h30m0s,\n"
+	process_set2_string2 := "Service.exe, 2024-11-23 09:00:00 +0000 UTC, 48h30m0s,\nTool.exe, 2024-11-24 06:15:00 +0000 UTC, 30m0s,\nApp1.exe, 2024-11-24 14:30:00 +0000 UTC, 2h15m0s,\n"
 	process_set3_string1 := ""
 	process_set3_string2 := ""
 
