@@ -58,7 +58,6 @@ func TestTimeParser(t *testing.T) { // TODO: add fail cases where the function h
 	}
 
 }
-
 func TestGatherProcesses(t *testing.T) {
 
 	process_set1 := make(map[string]Process)
@@ -147,7 +146,6 @@ func TestGatherProcesses(t *testing.T) {
 	}
 	// Actual testing
 }
-
 func TestUpdateProcesses(t *testing.T) {
 
 	// Write a starting point for processes
@@ -419,18 +417,116 @@ func TestExtractKeys(t *testing.T) {
 	}
 }
 
-func TestProcessMapToString(t *testing.T) {
-
-}
-
 func TestProcessMapToStringSortedByName(t *testing.T) {
 
-}
+	process_set1 := make(map[string]Process)
 
+	process_set1["Example.exe"] = Process{
+		name:       "Example.exe",
+		time_start: time.Date(2024, 11, 19, 12, 15, 32, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("444h30m20s")
+			return duration
+		}(),
+	}
+	process_set1["Program.exe"] = Process{
+		name:       "Program.exe",
+		time_start: time.Date(2024, 10, 31, 23, 45, 12, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	process_set1["Test_app.exe"] = Process{
+		name:       "Test_app.exe",
+		time_start: time.Date(2024, 9, 20, 14, 30, 45, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("993h14m27s")
+			return duration
+		}(),
+	}
+	process_set1["My_script.exe"] = Process{
+		name:       "My_script.exe",
+		time_start: time.Date(2024, 11, 1, 8, 45, 59, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("9h0m47s")
+			return duration
+		}(),
+	}
+	process_set1["Utility_tool.exe"] = Process{
+		name:       "Utility_tool.exe",
+		time_start: time.Date(2024, 11, 10, 10, 12, 34, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("226h27m22s")
+			return duration
+		}(),
+	}
+	process_set1["Helper.exe"] = Process{
+		name:       "Helper.exe",
+		time_start: time.Date(2024, 11, 19, 15, 0, 22, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("447h15m10s")
+			return duration
+		}(),
+	}
+	process_set1["Benchmark.exe"] = Process{
+		name:       "Benchmark.exe",
+		time_start: time.Date(2024, 8, 15, 9, 30, 11, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("1862h15m1s")
+			return duration
+		}(),
+	}
+	process_set1["Diagnostic.exe"] = Process{
+		name:       "Diagnostic.exe",
+		time_start: time.Date(2024, 11, 19, 7, 45, 1, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("439h59m49s")
+			return duration
+		}(),
+	}
+	process_set1["Update.exe"] = Process{
+		name:       "Update.exe",
+		time_start: time.Date(2024, 7, 10, 12, 34, 56, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("2723h10m16s")
+			return duration
+		}(),
+	}
+	process_set1["Debugger.exe"] = Process{
+		name:       "Debugger.exe",
+		time_start: time.Date(2024, 11, 19, 18, 30, 12, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("450h45m0s")
+			return duration
+		}(),
+	}
+
+	process_set1_string := ""
+
+	tests := []struct {
+		name      string
+		processes map[string]Process
+		expected  string
+	}{
+		{"Test 1", process_set1, process_set1_string},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+
+			result := ProcessMapToString(tc.processes)
+			if tc.expected != result {
+				t.Errorf("result \n%s ", result)
+			}
+
+		})
+	}
+
+}
 func TestProcessMapToStringSortedByTimeAlive(t *testing.T) {
 
 }
-
 func TestProcessMapToStringSortedByTimeStarted(t *testing.T) {
 
 }
