@@ -166,12 +166,48 @@ func ProcessMapToStringSortedByName(processes map[string]Process, inverse bool) 
 
 func ProcessMapToStringSortedByTimeStarted(processes map[string]Process, inverse bool) string {
 
-	return "Write me"
+	var builder strings.Builder
+	keys := extractKeys(processes)
+
+	sort.Slice(keys, func(i, j int) bool {
+		return processes[keys[i]].time_start.Before(processes[keys[j]].time_start)
+	})
+
+	if inverse {
+		for i := len(keys) - 1; i >= 0; i-- {
+			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[keys[i]].name, processes[keys[i]].time_start, processes[keys[i]].time_alive))
+		}
+
+	} else {
+		for _, key := range keys {
+			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[key].name, processes[key].time_start, processes[key].time_alive))
+		}
+	}
+
+	return builder.String()
 }
 
 func ProcessMapToStringSortedByTimeAlive(processes map[string]Process, inverse bool) string {
 
-	return "Write me"
+	var builder strings.Builder
+	keys := extractKeys(processes)
+
+	sort.SliceStable(keys, func(i, j int) bool {
+		return processes[keys[i]].time_alive < processes[keys[j]].time_alive
+	})
+
+	if inverse {
+		for i := len(keys) - 1; i >= 0; i-- {
+			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[keys[i]].name, processes[keys[i]].time_start, processes[keys[i]].time_alive))
+		}
+
+	} else {
+		for _, key := range keys {
+			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[key].name, processes[key].time_start, processes[key].time_alive))
+		}
+	}
+
+	return builder.String()
 }
 
 // Process to string functions
