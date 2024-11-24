@@ -30,8 +30,8 @@ var (
 
 func CreateBox() *fyne.Container {
 	// Box background
-	rect := canvas.NewRectangle(color.NRGBA{R: 200, G: 200, B: 255, A: 255}) // Light blue background
-	rect.SetMinSize(fyne.NewSize(0, 30))                                     // Set minimum height for boxes
+	rect := canvas.NewRectangle(color.NRGBA{R: 40, G: 41, B: 46, A: 255}) // Light blue background
+	rect.SetMinSize(fyne.NewSize(0, 30))                                  // Set minimum height for boxes
 
 	// Label for text
 	label := widget.NewLabel("")

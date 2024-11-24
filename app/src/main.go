@@ -1,14 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"image/color"
+	"log"
 	"strings"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
@@ -21,18 +22,25 @@ func main() {
 		&[]string{ProcessMapToStringSortedByName(ParseProcesses(string(grabProcesses())), true)},
 	)
 
-	toolbar := widget.NewToolbar(
-		widget.NewToolbarAction(theme.ContentAddIcon(), func() {
-			fmt.Println("Add clicked")
-		}),
+	// GUI MESS, NOT SURE HOW TO MAKE CLEAN
 
-		widget.NewToolbarAction(theme.ContentRemoveIcon(), func() {
-			fmt.Println("Remove clicked")
-		}),
+	combo1 := widget.NewSelect([]string{"Option 1", "Option 2"}, func(value string) {
+		log.Println("Combo 1 set to", value)
+	})
 
-		widget.NewToolbarAction(theme.ViewRefreshIcon(), func() {
-			fmt.Println("Refresh clicked")
-		}),
+	combo2 := widget.NewSelect([]string{"Choice A", "Choice B"}, func(value string) {
+		log.Println("Combo 2 set to", value)
+	})
+
+	combo3 := widget.NewSelect([]string{"Select X", "Select Y"}, func(value string) {
+		log.Println("Combo 3 set to", value)
+	})
+
+	// Create a horizontal container
+	toolbar := container.NewGridWithColumns(3,
+		container.New(layout.NewStackLayout(), combo1),
+		container.New(layout.NewStackLayout(), combo2),
+		container.New(layout.NewStackLayout(), combo3),
 	)
 
 	categories := container.NewGridWithColumns(3, // Four equal columns
@@ -41,7 +49,6 @@ func main() {
 		widget.NewButton("Runtime", TimeAliveSignal),
 	)
 
-	// GUI MESS, NOT SURE HOW TO MAKE CLEAN
 	list := widget.NewListWithData(data,
 		func() fyne.CanvasObject {
 			// Create a row with dynamically sized boxes
@@ -68,7 +75,7 @@ func main() {
 		})
 
 	// // Create a rectangle for the background
-	background := canvas.NewRectangle(color.NRGBA{R: 200, G: 200, B: 255, A: 255}) // Light blue background
+	background := canvas.NewRectangle(color.NRGBA{R: 40, G: 41, B: 46, A: 255}) // Light blue background
 
 	// // Create layout content
 	title := widget.NewLabel("Process Viewer")
@@ -89,6 +96,8 @@ func main() {
 	windowBuilder := ConcreteWindowBuilder{}
 
 	pWindow := windowBuilder.InitialiseWindow().SetWindowContainer(mainContent).SetWindowSize(900, 500).Build()
+
+	pWindow.app.Settings().SetTheme(theme.DarkTheme())
 
 	go myFunc(data, ParseProcesses(string(grabProcesses())), list)
 
