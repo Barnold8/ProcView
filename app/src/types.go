@@ -33,3 +33,14 @@ type FuncPointerNoArgs func()
 type FuncPointerOneArgs func(T any)
 
 type FuncPointerTwoArgs func(T any, V any)
+
+type EControlValue int
+
+const (
+	ByName EControlValue = iota
+	ByNameInverse
+	ByAlive
+	ByAliveInverse
+	ByCreated
+	ByCreatedInverse
+)
