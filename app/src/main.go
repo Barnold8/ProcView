@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image/color"
 	"strings"
 
@@ -8,6 +9,7 @@ import (
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -16,10 +18,28 @@ func main() {
 	myFunc := AppendData
 
 	data := binding.BindStringList(
-		&[]string{ProcessMapToString(ParseProcesses(string(grabProcesses())))},
+		&[]string{ProcessMapToStringSortedByName(ParseProcesses(string(grabProcesses())), true)},
 	)
 
-	go myFunc(data, ParseProcesses(string(grabProcesses())))
+	toolbar := widget.NewToolbar(
+		widget.NewToolbarAction(theme.ContentAddIcon(), func() {
+			fmt.Println("Add clicked")
+		}),
+
+		widget.NewToolbarAction(theme.ContentRemoveIcon(), func() {
+			fmt.Println("Remove clicked")
+		}),
+
+		widget.NewToolbarAction(theme.ViewRefreshIcon(), func() {
+			fmt.Println("Refresh clicked")
+		}),
+	)
+
+	categories := container.NewGridWithColumns(3, // Four equal columns
+		widget.NewButton("Name", func() {}),
+		widget.NewButton("Time created", func() {}),
+		widget.NewButton("Runtime", func() {}),
+	)
 
 	// GUI MESS, NOT SURE HOW TO MAKE CLEAN
 	list := widget.NewListWithData(data,
@@ -55,12 +75,13 @@ func main() {
 	title.Alignment = fyne.TextAlignCenter
 
 	// // Use a vertical box layout for the content
-	content := container.NewBorder(title, nil, nil, nil, list)
+	content := container.NewBorder(categories, nil, nil, nil, list)
+	content2 := container.NewBorder(toolbar, nil, nil, nil, content)
 
 	// // Combine background and content using container.NewMax
 	mainContent := container.NewStack(
 		background,
-		content,
+		content2,
 	)
 
 	// GUI MESS, NOT SURE HOW TO MAKE CLEAN
@@ -68,6 +89,8 @@ func main() {
 	windowBuilder := ConcreteWindowBuilder{}
 
 	pWindow := windowBuilder.InitialiseWindow().SetWindowContainer(mainContent).SetWindowSize(900, 500).Build()
+
+	go myFunc(data, ParseProcesses(string(grabProcesses())), list)
 
 	pWindow.window.ShowAndRun()
 
