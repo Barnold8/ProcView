@@ -126,11 +126,6 @@ func UpdateProcesses(processes map[string]Process, now time.Time, current_proces
 	return updated_processes
 }
 
-// TODO:
-
-// Add a date | time part of the builder string, rather than date and time being its own sub element
-// Add function to sort by process attributes, one for time started, one for time alive
-
 func extractKeys(processes map[string]Process) []string {
 
 	keys := make([]string, 0, len(processes))
