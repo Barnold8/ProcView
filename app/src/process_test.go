@@ -140,7 +140,7 @@ func TestGatherProcesses(t *testing.T) {
 					t.Errorf("Maps do not match.\n\n\n\nExpected: %#v\n\n\n\n\n\nGot: %#v", tc.expected, result)
 				}
 			} else {
-				t.Errorf("Expected []Process but got nil")
+				t.Errorf("Expected map[string]Process but got nil")
 			}
 		})
 	}
@@ -328,7 +328,7 @@ func TestUpdateProcesses(t *testing.T) {
 					t.Errorf("Maps do not match.\n\n\n\nExpected: %#v\n\n\n\n\n\nGot: %#v", tc.expected, result)
 				}
 			} else {
-				t.Errorf("Expected []Process but got nil")
+				t.Errorf("Expected map[string]Process but got nil")
 			}
 		})
 	}
@@ -557,12 +557,12 @@ func TestProcessMapToStringSortedByName(t *testing.T) {
 			if i%2 == 0 {
 				result := ProcessMapToStringSortedByName(tc.processes, true)
 				if tc.expected != result {
-					t.Errorf("result \n%s ", result)
+					t.Errorf("\nExpected\n\n%s \n\n\nbut got result \n\n%s\n\n", tc.expected, result)
 				}
 			} else {
 				result := ProcessMapToStringSortedByName(tc.processes, false)
 				if tc.expected != result {
-					t.Errorf("result \n%s ", result)
+					t.Errorf("\nExpected\n\n%s \n\n\nbut got result \n\n%s\n\n", tc.expected, result)
 				}
 			}
 
@@ -864,12 +864,12 @@ func TestProcessMapToStringSortedByTimeStarted(t *testing.T) {
 			if i%2 == 0 {
 				result := ProcessMapToStringSortedByTimeStarted(tc.processes, true)
 				if tc.expected != result {
-					t.Errorf("result \n%s ", result)
+					t.Errorf("\nExpected\n\n%s \n\n\nbut got result \n\n%s\n\n", tc.expected, result)
 				}
 			} else {
 				result := ProcessMapToStringSortedByTimeStarted(tc.processes, false)
 				if tc.expected != result {
-					t.Errorf("result \n%s ", result)
+					t.Errorf("\nExpected\n\n%s \n\n\nbut got result \n\n%s\n\n", tc.expected, result)
 				}
 			}
 
