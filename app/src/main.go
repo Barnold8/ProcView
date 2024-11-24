@@ -36,9 +36,9 @@ func main() {
 	)
 
 	categories := container.NewGridWithColumns(3, // Four equal columns
-		widget.NewButton("Name", func() {}),
-		widget.NewButton("Time created", func() {}),
-		widget.NewButton("Runtime", func() {}),
+		widget.NewButton("Name", NameSignal),
+		widget.NewButton("Time created", TimeCreatedSignal),
+		widget.NewButton("Runtime", TimeAliveSignal),
 	)
 
 	// GUI MESS, NOT SURE HOW TO MAKE CLEAN
