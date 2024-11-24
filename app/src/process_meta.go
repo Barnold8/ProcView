@@ -2,16 +2,27 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os/exec"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
+	"unicode"
 )
 
 type Process struct {
 	name       string
 	time_start time.Time     // This was needed for testing...
 	time_alive time.Duration // if theres a time struct, use this
+}
+
+func capitalizeFirstLetter(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return string(unicode.ToUpper(rune(s[0]))) + s[1:]
 }
 
 func parseTime(timeStr string) (time.Time, error) {
@@ -55,10 +66,10 @@ func parseTime(timeStr string) (time.Time, error) {
 	return process_time, nil
 }
 
-func ParseProcesses(str string) []Process {
+func ParseProcesses(str string) map[string]Process {
 
-	var processes []Process
 	var split []string = strings.Split(str, "\n")
+	processes := make(map[string]Process)
 
 	for _, element := range split {
 
@@ -73,28 +84,125 @@ func ParseProcesses(str string) []Process {
 				return nil
 			}
 
-			process.name = processed_string[0]
+			process.name = capitalizeFirstLetter(processed_string[0])
 			process.time_start = _time
-			processes = append(processes, process)
+			processes[process.name] = process
+
 		}
 	}
 
 	return processes
 }
 
-func removeDuplicateProcesses(unsortedProcesses []Process) []Process {
+func grabProcesses() []byte {
 
-	processes := make([]Process, 0, len(unsortedProcesses)) // allocate memory for n processes that already exist so we dont go over the limit
-	names := make(map[string]struct{})                      // make a map to look for keys only, we use a struct to fill the data field
+	cmd := exec.Command("wmic.exe", "process", "get", "Caption,CreationDate")
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Fatalf("Error running tasklist command: %v", err)
+	}
+	return output
+}
 
-	for _, process := range unsortedProcesses { // for the processes in our unsorted slice
+func UpdateProcesses(processes map[string]Process, now time.Time, current_processes string) map[string]Process {
+	updated_processes := make(map[string]Process)
+	grabbed := ParseProcesses(current_processes)
 
-		if _, exists := names[process.name]; !exists { // if the name doesnt exist
-			processes = append(processes, process) // add it to the new array
-			names[process.name] = struct{}{}       // add the name to the list of names
+	for key := range processes {
+		var elapsed_time time.Duration
+		_, exists := grabbed[key]
+
+		if exists {
+			elapsed_time = now.Sub(grabbed[key].time_start)
+			updated_processes[key] = Process{
+				grabbed[key].name,
+				grabbed[key].time_start,
+				elapsed_time.Abs(),
+			}
+
 		}
-
 	}
 
-	return processes
+	return updated_processes
 }
+
+func extractKeys(processes map[string]Process) []string {
+
+	keys := make([]string, 0, len(processes))
+
+	for key := range processes {
+		keys = append(keys, key)
+	}
+
+	return keys
+}
+
+// Process to string functions
+
+func ProcessMapToStringSortedByName(processes map[string]Process, inverse bool) string {
+
+	var builder strings.Builder
+	keys := extractKeys(processes)
+	sort.Strings(keys)
+
+	if inverse {
+		for i := len(keys) - 1; i >= 0; i-- {
+			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[keys[i]].name, processes[keys[i]].time_start, processes[keys[i]].time_alive))
+		}
+
+	} else {
+		for _, key := range keys {
+			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[key].name, processes[key].time_start, processes[key].time_alive))
+		}
+	}
+
+	return builder.String()
+}
+
+func ProcessMapToStringSortedByTimeStarted(processes map[string]Process, inverse bool) string {
+
+	var builder strings.Builder
+	keys := extractKeys(processes)
+
+	sort.Slice(keys, func(i, j int) bool {
+		return processes[keys[i]].time_start.Before(processes[keys[j]].time_start)
+	})
+
+	if inverse {
+		for i := len(keys) - 1; i >= 0; i-- {
+			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[keys[i]].name, processes[keys[i]].time_start, processes[keys[i]].time_alive))
+		}
+
+	} else {
+		for _, key := range keys {
+			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[key].name, processes[key].time_start, processes[key].time_alive))
+		}
+	}
+
+	return builder.String()
+}
+
+func ProcessMapToStringSortedByTimeAlive(processes map[string]Process, inverse bool) string {
+
+	var builder strings.Builder
+	keys := extractKeys(processes)
+
+	sort.SliceStable(keys, func(i, j int) bool {
+		return processes[keys[i]].time_alive < processes[keys[j]].time_alive
+	})
+
+	if inverse {
+		for i := len(keys) - 1; i >= 0; i-- {
+			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[keys[i]].name, processes[keys[i]].time_start, processes[keys[i]].time_alive))
+		}
+
+	} else {
+		for _, key := range keys {
+			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[key].name, processes[key].time_start, processes[key].time_alive))
+		}
+	}
+
+	return builder.String()
+}
+
+// Process to string functions
