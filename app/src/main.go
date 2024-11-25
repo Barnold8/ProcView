@@ -13,7 +13,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func main() {
+func makeWindow() {
 
 	// variable definitions/declarations
 	var fileCombo *widget.Select
@@ -99,5 +99,12 @@ func main() {
 	go myFunc(data, ParseProcesses(string(grabProcesses())), list)
 
 	pWindow.window.ShowAndRun()
+}
+
+func main() {
+
+	// fmt.Println(getCurrentUser())
+
+	makeWindow()
 
 }
