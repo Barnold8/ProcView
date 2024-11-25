@@ -13,7 +13,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func main() {
+func makeWindow() {
 
 	// variable definitions/declarations
 	var fileCombo *widget.Select
@@ -28,11 +28,11 @@ func main() {
 
 	// GUI MESS, NOT SURE HOW TO MAKE CLEAN
 
-	fileCombo = widget.NewSelect([]string{"aaaa 1", "bbbb 2"}, func(value string) {
+	fileCombo = widget.NewSelect([]string{"Export CSV"}, func(value string) {
 		File(value, fileCombo)
 	})
 
-	settingsCombo = widget.NewSelect([]string{"Choice A", "Choice B"}, func(value string) {
+	settingsCombo = widget.NewSelect([]string{"Add To StartUp", "Remove From StartUp"}, func(value string) {
 		Settings(value, settingsCombo)
 	})
 
@@ -99,5 +99,10 @@ func main() {
 	go myFunc(data, ParseProcesses(string(grabProcesses())), list)
 
 	pWindow.window.ShowAndRun()
+}
+
+func main() {
+
+	makeWindow()
 
 }
