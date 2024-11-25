@@ -185,7 +185,14 @@ func Settings(value string, combo *widget.Select) {
 
 	switch value {
 	case "Add To StartUp":
-		err := addProgramToStartup("src.exe")
+		err := addProgramToStartup("ProcView.exe")
+		if err != nil {
+			fmt.Printf("Error detected when adding program to startup %sn", err)
+		}
+		break
+
+	case "Remove From StartUp":
+		err := removeFromStartUp()
 		if err != nil {
 			fmt.Printf("Error detected when adding program to startup %sn", err)
 		}
