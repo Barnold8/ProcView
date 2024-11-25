@@ -32,7 +32,7 @@ func makeWindow() {
 		File(value, fileCombo)
 	})
 
-	settingsCombo = widget.NewSelect([]string{"Choice A", "Choice B"}, func(value string) {
+	settingsCombo = widget.NewSelect([]string{"Add To StartUp", "Remove From StartUp"}, func(value string) {
 		Settings(value, settingsCombo)
 	})
 
@@ -102,8 +102,6 @@ func makeWindow() {
 }
 
 func main() {
-
-	// fmt.Println(getCurrentUser())
 
 	makeWindow()
 
