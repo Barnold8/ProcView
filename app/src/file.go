@@ -13,7 +13,7 @@ func ProcessMapToCSV(processes map[string]Process) string {
 	builder.WriteString("Process Name, Time Created, RunTime\n")
 
 	for _, value := range processes {
-		builder.WriteString(fmt.Sprintf("%s,%s,%s", value.name, value.time_start, value.time_alive))
+		builder.WriteString(fmt.Sprintf("%s,%s,%s\n", value.name, value.time_start, value.time_alive))
 	}
 
 	return builder.String()
