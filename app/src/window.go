@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image/color"
 	"strings"
 	"sync"
@@ -184,7 +185,10 @@ func Settings(value string, combo *widget.Select) {
 
 	switch value {
 	case "Add To StartUp":
-
+		err := addProgramToStartup("src.exe")
+		if err != nil {
+			fmt.Printf("Error detected when adding program to startup %sn", err)
+		}
 		break
 
 	default:
