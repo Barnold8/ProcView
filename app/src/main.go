@@ -28,7 +28,7 @@ func main() {
 
 	// GUI MESS, NOT SURE HOW TO MAKE CLEAN
 
-	fileCombo = widget.NewSelect([]string{"aaaa 1", "bbbb 2"}, func(value string) {
+	fileCombo = widget.NewSelect([]string{"Export CSV"}, func(value string) {
 		File(value, fileCombo)
 	})
 

@@ -183,7 +183,8 @@ func Settings(value string, combo *widget.Select) {
 	}
 
 	switch value {
-	case "":
+	case "Add To StartUp":
+
 		break
 
 	default:
