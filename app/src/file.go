@@ -28,8 +28,6 @@ func SaveToFile(filename string, contents string) {
 		fmt.Println("Error opening file:", err)
 		return
 	}
-
-	// Write data to the file
 	_, err = file.WriteString(contents)
 	if err != nil {
 		fmt.Println("Error writing to file:", err)
@@ -68,6 +66,12 @@ func addProgramToStartup(executablePath string) error {
 
 	return nil
 
+}
+
+func removeFromStartUp() error {
+	destinationPath := fmt.Sprintf("C:\\Users\\%s\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\ProcView.exe", getCurrentUser())
+	err := os.Remove(destinationPath)
+	return err
 }
 
 func getCurrentUser() string {
