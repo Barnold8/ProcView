@@ -168,7 +168,7 @@ func File(value string, combo *widget.Select) {
 
 	switch value {
 	case "Export CSV":
-		break
+		SaveToFile("Export.csv", ProcessMapToCSV(UpdateProcesses(ParseProcesses(string(grabProcesses())), time.Now(), string(grabProcesses()))))
 
 	default:
 
