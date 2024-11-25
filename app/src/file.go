@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/user"
 	"strings"
 )
 
@@ -35,5 +36,19 @@ func SaveToFile(filename string, contents string) {
 	}
 
 	file.Close()
+
+}
+
+func getCurrentUser() string {
+
+	currentUser, err := user.Current()
+	if err != nil {
+		fmt.Println("Error fetching user:", err)
+		return "NIL"
+	}
+
+	sections := strings.Split(currentUser.Username, "\\")
+
+	return sections[len(sections)-1]
 
 }
