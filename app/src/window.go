@@ -159,3 +159,35 @@ func TimeCreatedSignal() {
 	mu.Unlock()
 
 }
+
+func File(value string, combo *widget.Select) {
+
+	if combo != nil {
+		combo.Selected = "File"
+	}
+
+	switch value {
+	case "Export CSV":
+		break
+
+	default:
+
+	}
+
+}
+
+func Settings(value string, combo *widget.Select) {
+
+	if combo != nil {
+		combo.Selected = "Settings"
+	}
+
+	switch value {
+	case "":
+		break
+
+	default:
+
+	}
+
+}
