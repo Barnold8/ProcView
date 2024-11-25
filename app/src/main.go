@@ -2,7 +2,6 @@ package main
 
 import (
 	"image/color"
-	"log"
 	"strings"
 
 	"fyne.io/fyne/v2"
@@ -16,31 +15,33 @@ import (
 
 func main() {
 
+	// variable definitions/declarations
+	var fileCombo *widget.Select
+	var settingsCombo *widget.Select
+
 	myFunc := AppendData
 
 	data := binding.BindStringList(
 		&[]string{ProcessMapToStringSortedByName(ParseProcesses(string(grabProcesses())), true)},
 	)
+	// variable definitions/declarations
 
 	// GUI MESS, NOT SURE HOW TO MAKE CLEAN
 
-	combo1 := widget.NewSelect([]string{"Option 1", "Option 2"}, func(value string) {
-		log.Println("Combo 1 set to", value)
+	fileCombo = widget.NewSelect([]string{"aaaa 1", "bbbb 2"}, func(value string) {
+		File(value, fileCombo)
 	})
 
-	combo2 := widget.NewSelect([]string{"Choice A", "Choice B"}, func(value string) {
-		log.Println("Combo 2 set to", value)
+	settingsCombo = widget.NewSelect([]string{"Choice A", "Choice B"}, func(value string) {
+		Settings(value, settingsCombo)
 	})
 
-	combo3 := widget.NewSelect([]string{"Select X", "Select Y"}, func(value string) {
-		log.Println("Combo 3 set to", value)
-	})
+	fileCombo.Selected = "File"
+	settingsCombo.Selected = "Settings"
 
-	// Create a horizontal container
-	toolbar := container.NewGridWithColumns(3,
-		container.New(layout.NewStackLayout(), combo1),
-		container.New(layout.NewStackLayout(), combo2),
-		container.New(layout.NewStackLayout(), combo3),
+	toolbar := container.NewGridWithColumns(2,
+		container.New(layout.NewStackLayout(), fileCombo),
+		container.New(layout.NewStackLayout(), settingsCombo),
 	)
 
 	categories := container.NewGridWithColumns(3, // Four equal columns
@@ -51,13 +52,13 @@ func main() {
 
 	list := widget.NewListWithData(data,
 		func() fyne.CanvasObject {
-			// Create a row with dynamically sized boxes
-			return container.NewGridWithColumns(3, // Adjust column count as necessary
+
+			return container.NewGridWithColumns(3,
 				CreateBox(), CreateBox(), CreateBox(),
 			)
 		},
 		func(i binding.DataItem, o fyne.CanvasObject) {
-			// Bind data to each box
+
 			grid := o.(*fyne.Container)
 			stringValue, err := i.(binding.String).Get()
 			if err != nil {
@@ -76,10 +77,6 @@ func main() {
 
 	// // Create a rectangle for the background
 	background := canvas.NewRectangle(color.NRGBA{R: 40, G: 41, B: 46, A: 255}) // Light blue background
-
-	// // Create layout content
-	title := widget.NewLabel("Process Viewer")
-	title.Alignment = fyne.TextAlignCenter
 
 	// // Use a vertical box layout for the content
 	content := container.NewBorder(categories, nil, nil, nil, list)
