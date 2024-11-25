@@ -531,7 +531,7 @@ func TestProcessMapToStringSortedByName(t *testing.T) {
 		}(),
 	}
 
-	process_set1_string1 := "Utility_tool.exe, 2024-11-10 10:12:34 +0000 UTC, 226h27m22s,\nUpdate.exe, 2024-07-10 12:34:56 +0000 UTC, 2723h10m16s,\nTest_app.exe, 2024-09-20 14:30:45 +0000 UTC, 993h14m27s,\nProgram.exe, 2024-10-31 23:45:12 +0000 UTC, 0s,\nMy_script.exe, 2024-11-01 08:45:59 +0000 UTC, 9h0m47s,\nHelper.exe, 2024-11-19 15:00:22 +0000 UTC, 447h15m10s,\nExample.exe, 2024-11-19 12:15:32 +0000 UTC, 444h30m20s,\nDiagnostic.exe, 2024-11-19 07:45:01 +0000 UTC, 439h59m49s,\nDebugger.exe, 2024-11-19 18:30:12 +0000 UTC, 450h45m0s,\nBenchmark.exe, 2024-08-15 09:30:11 +0000 UTC, 1862h15m1s,\n"
+	process_set1_string1 := "Utility_tool.exe, 2024-11-10 10:12:34, 226h27m22s,\nUpdate.exe, 2024-07-10 12:34:56 +0000 UTC, 2723h10m16s,\nTest_app.exe, 2024-09-20 14:30:45 +0000 UTC, 993h14m27s,\nProgram.exe, 2024-10-31 23:45:12 +0000 UTC, 0s,\nMy_script.exe, 2024-11-01 08:45:59 +0000 UTC, 9h0m47s,\nHelper.exe, 2024-11-19 15:00:22 +0000 UTC, 447h15m10s,\nExample.exe, 2024-11-19 12:15:32 +0000 UTC, 444h30m20s,\nDiagnostic.exe, 2024-11-19 07:45:01 +0000 UTC, 439h59m49s,\nDebugger.exe, 2024-11-19 18:30:12 +0000 UTC, 450h45m0s,\nBenchmark.exe, 2024-08-15 09:30:11 +0000 UTC, 1862h15m1s,\n"
 	process_set1_string2 := "Benchmark.exe, 2024-08-15 09:30:11 +0000 UTC, 1862h15m1s,\nDebugger.exe, 2024-11-19 18:30:12 +0000 UTC, 450h45m0s,\nDiagnostic.exe, 2024-11-19 07:45:01 +0000 UTC, 439h59m49s,\nExample.exe, 2024-11-19 12:15:32 +0000 UTC, 444h30m20s,\nHelper.exe, 2024-11-19 15:00:22 +0000 UTC, 447h15m10s,\nMy_script.exe, 2024-11-01 08:45:59 +0000 UTC, 9h0m47s,\nProgram.exe, 2024-10-31 23:45:12 +0000 UTC, 0s,\nTest_app.exe, 2024-09-20 14:30:45 +0000 UTC, 993h14m27s,\nUpdate.exe, 2024-07-10 12:34:56 +0000 UTC, 2723h10m16s,\nUtility_tool.exe, 2024-11-10 10:12:34 +0000 UTC, 226h27m22s,\n"
 	process_set2_string1 := "Tool.exe, 2024-11-24 06:15:00 +0000 UTC, 30m0s,\nService.exe, 2024-11-23 09:00:00 +0000 UTC, 48h30m0s,\nApp1.exe, 2024-11-24 14:30:00 +0000 UTC, 2h15m0s,\n"
 	process_set2_string2 := "App1.exe, 2024-11-24 14:30:00 +0000 UTC, 2h15m0s,\nService.exe, 2024-11-23 09:00:00 +0000 UTC, 48h30m0s,\nTool.exe, 2024-11-24 06:15:00 +0000 UTC, 30m0s,\n"
@@ -877,3 +877,5 @@ func TestProcessMapToStringSortedByTimeStarted(t *testing.T) {
 	}
 
 }
+
+// TODO: Change the parse durations to strings in the test examples in the sorting algorithms. for example 25h2m3s should be 1 day 1 hourr 2 minutes 3 seconds
