@@ -427,7 +427,7 @@ func TestProcessMapToStringSortedByName(t *testing.T) {
 		name:       "Example.exe",
 		time_start: time.Date(2024, 11, 19, 12, 15, 32, 0, time.UTC),
 		time_alive: func() time.Duration {
-			duration, _ := time.ParseDuration("444h30m20s")
+			duration, _ := time.ParseDuration("444h30m20.00000s")
 			return duration
 		}(),
 	}
@@ -531,10 +531,10 @@ func TestProcessMapToStringSortedByName(t *testing.T) {
 		}(),
 	}
 
-	process_set1_string1 := "Utility_tool.exe, 2024-11-10 10:12:34, 226h27m22s,\nUpdate.exe, 2024-07-10 12:34:56 +0000 UTC, 2723h10m16s,\nTest_app.exe, 2024-09-20 14:30:45 +0000 UTC, 993h14m27s,\nProgram.exe, 2024-10-31 23:45:12 +0000 UTC, 0s,\nMy_script.exe, 2024-11-01 08:45:59 +0000 UTC, 9h0m47s,\nHelper.exe, 2024-11-19 15:00:22 +0000 UTC, 447h15m10s,\nExample.exe, 2024-11-19 12:15:32 +0000 UTC, 444h30m20s,\nDiagnostic.exe, 2024-11-19 07:45:01 +0000 UTC, 439h59m49s,\nDebugger.exe, 2024-11-19 18:30:12 +0000 UTC, 450h45m0s,\nBenchmark.exe, 2024-08-15 09:30:11 +0000 UTC, 1862h15m1s,\n"
-	process_set1_string2 := "Benchmark.exe, 2024-08-15 09:30:11 +0000 UTC, 1862h15m1s,\nDebugger.exe, 2024-11-19 18:30:12 +0000 UTC, 450h45m0s,\nDiagnostic.exe, 2024-11-19 07:45:01 +0000 UTC, 439h59m49s,\nExample.exe, 2024-11-19 12:15:32 +0000 UTC, 444h30m20s,\nHelper.exe, 2024-11-19 15:00:22 +0000 UTC, 447h15m10s,\nMy_script.exe, 2024-11-01 08:45:59 +0000 UTC, 9h0m47s,\nProgram.exe, 2024-10-31 23:45:12 +0000 UTC, 0s,\nTest_app.exe, 2024-09-20 14:30:45 +0000 UTC, 993h14m27s,\nUpdate.exe, 2024-07-10 12:34:56 +0000 UTC, 2723h10m16s,\nUtility_tool.exe, 2024-11-10 10:12:34 +0000 UTC, 226h27m22s,\n"
-	process_set2_string1 := "Tool.exe, 2024-11-24 06:15:00 +0000 UTC, 30m0s,\nService.exe, 2024-11-23 09:00:00 +0000 UTC, 48h30m0s,\nApp1.exe, 2024-11-24 14:30:00 +0000 UTC, 2h15m0s,\n"
-	process_set2_string2 := "App1.exe, 2024-11-24 14:30:00 +0000 UTC, 2h15m0s,\nService.exe, 2024-11-23 09:00:00 +0000 UTC, 48h30m0s,\nTool.exe, 2024-11-24 06:15:00 +0000 UTC, 30m0s,\n"
+	process_set1_string1 := "Utility_tool.exe, 2024-11-10 10:12:34, 9 days 10 hours 27 minutes 22 seconds,\nUpdate.exe, 2024-07-10 12:34:56, 113 days 11 hours 10 minutes 16 seconds,\nTest_app.exe, 2024-09-20 14:30:45, 41 days 9 hours 14 minutes 27 seconds,\nProgram.exe, 2024-10-31 23:45:12, 0 seconds,\nMy_script.exe, 2024-11-01 08:45:59, 9 hours 47 seconds,\nHelper.exe, 2024-11-19 15:00:22, 18 days 15 hours 15 minutes 10 seconds,\nExample.exe, 2024-11-19 12:15:32, 18 days 12 hours 30 minutes 20 seconds,\nDiagnostic.exe, 2024-11-19 07:45:01, 18 days 7 hours 59 minutes 49 seconds,\nDebugger.exe, 2024-11-19 18:30:12, 18 days 18 hours 45 minutes,\nBenchmark.exe, 2024-08-15 09:30:11, 77 days 14 hours 15 minutes 1 seconds,\n"
+	process_set1_string2 := "Benchmark.exe, 2024-08-15 09:30:11, 77 days 14 hours 15 minutes 1 seconds,\nDebugger.exe, 2024-11-19 18:30:12, 18 days 18 hours 45 minutes,\nDiagnostic.exe, 2024-11-19 07:45:01, 18 days 7 hours 59 minutes 49 seconds,\nExample.exe, 2024-11-19 12:15:32, 18 days 12 hours 30 minutes 20 seconds,\nHelper.exe, 2024-11-19 15:00:22, 18 days 15 hours 15 minutes 10 seconds,\nMy_script.exe, 2024-11-01 08:45:59, 9 hours 47 seconds,\nProgram.exe, 2024-10-31 23:45:12, 0 seconds,\nTest_app.exe, 2024-09-20 14:30:45, 41 days 9 hours 14 minutes 27 seconds,\nUpdate.exe, 2024-07-10 12:34:56, 113 days 11 hours 10 minutes 16 seconds,\nUtility_tool.exe, 2024-11-10 10:12:34, 9 days 10 hours 27 minutes 22 seconds,\n"
+	process_set2_string1 := "Tool.exe, 2024-11-24 06:15:00, 30 minutes,\nService.exe, 2024-11-23 09:00:00, 2 days 30 minutes,\nApp1.exe, 2024-11-24 14:30:00, 2 hours 15 minutes,\n"
+	process_set2_string2 := "App1.exe, 2024-11-24 14:30:00, 2 hours 15 minutes,\nService.exe, 2024-11-23 09:00:00, 2 days 30 minutes,\nTool.exe, 2024-11-24 06:15:00, 30 minutes,\n"
 	process_set3_string1 := ""
 	process_set3_string2 := ""
 
