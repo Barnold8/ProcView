@@ -80,16 +80,22 @@ func reformatDate(input string) (string, error) {
 
 func reformatDuration(input string) string {
 
-	re := regexp.MustCompile(`(\d+(\.\d+)?)s`)
-	input = re.ReplaceAllStringFunc(input, func(s string) string {
+	fmt.Printf("INCOMING TIME STRING: %s \n\n\n\n", input)
 
-		parts := strings.Split(s, ".")
-		return parts[0] + "s"
-	})
+	if !strings.Contains(input, "s") {
+		re := regexp.MustCompile(`(\d+(\.\d+)?)s`)
+		input = re.ReplaceAllStringFunc(input, func(s string) string {
+
+			parts := strings.Split(s, ".")
+			return parts[0] + "s"
+		})
+	}
+
+	fmt.Printf("PARSED TIME: %s \n\n\n\n", input)
 
 	duration, err := time.ParseDuration(input)
 	if err != nil {
-		return "Invalid time format"
+		return fmt.Sprintf("Invalid time format, got %s\n with error %s", input, err)
 	}
 
 	days := int(duration.Hours()) / 24
@@ -239,18 +245,22 @@ func ProcessMapToStringSortedByTimeStarted(processes map[string]Process, inverse
 	if inverse {
 		for i := len(keys) - 1; i >= 0; i-- {
 
+			fmt.Println()
+
 			timeStart, timeErr := reformatDate(processes[keys[i]].time_start.String())
 			timeAlive := reformatDuration(processes[keys[i]].time_alive.String())
 
 			if timeErr != nil {
 				timeStart = "Error!"
 			}
-
+			fmt.Println(timeStart)
 			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[keys[i]].name, timeStart, timeAlive))
 		}
 
 	} else {
 		for _, key := range keys {
+
+			fmt.Println(processes[key].time_start.String())
 
 			timeStart, timeErr := reformatDate(processes[key].time_start.String())
 			timeAlive := reformatDuration(processes[key].time_alive.String())
