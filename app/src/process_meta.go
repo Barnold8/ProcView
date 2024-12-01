@@ -80,16 +80,18 @@ func reformatDate(input string) (string, error) {
 
 func reformatDuration(input string) string {
 
-	re := regexp.MustCompile(`(\d+(\.\d+)?)s`)
-	input = re.ReplaceAllStringFunc(input, func(s string) string {
+	if !strings.Contains(input, "s") {
+		re := regexp.MustCompile(`(\d+(\.\d+)?)s`)
+		input = re.ReplaceAllStringFunc(input, func(s string) string {
 
-		parts := strings.Split(s, ".")
-		return parts[0] + "s"
-	})
+			parts := strings.Split(s, ".")
+			return parts[0] + "s"
+		})
+	}
 
 	duration, err := time.ParseDuration(input)
 	if err != nil {
-		return "Invalid time format"
+		return fmt.Sprintf("Invalid time format, got %s\n with error %s", input, err)
 	}
 
 	days := int(duration.Hours()) / 24
