@@ -878,4 +878,24 @@ func TestProcessMapToStringSortedByTimeStarted(t *testing.T) {
 
 }
 
+func TestParseTime(t *testing.T) {
+
+	fmt.Errorf("Test not yet implemented")
+}
+
+func TestReformatDate(t *testing.T) {
+
+	fmt.Errorf("Test not yet implemented")
+}
+
+func TestReformatDuration(t *testing.T) {
+
+	fmt.Errorf("Test not yet implemented")
+}
+
+func TestParseProcesses(t *testing.T) {
+
+	fmt.Errorf("Test not yet implemented")
+}
+
 // TODO: Change the parse durations to strings in the test examples in the sorting algorithms. for example 25h2m3s should be 1 day 1 hourr 2 minutes 3 seconds
