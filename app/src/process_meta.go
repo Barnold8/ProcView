@@ -241,22 +241,18 @@ func ProcessMapToStringSortedByTimeStarted(processes map[string]Process, inverse
 	if inverse {
 		for i := len(keys) - 1; i >= 0; i-- {
 
-			fmt.Println()
-
 			timeStart, timeErr := reformatDate(processes[keys[i]].time_start.String())
 			timeAlive := reformatDuration(processes[keys[i]].time_alive.String())
 
 			if timeErr != nil {
 				timeStart = "Error!"
 			}
-			fmt.Println(timeStart)
+
 			builder.WriteString(fmt.Sprintf("%s, %s, %s,\n", processes[keys[i]].name, timeStart, timeAlive))
 		}
 
 	} else {
 		for _, key := range keys {
-
-			fmt.Println(processes[key].time_start.String())
 
 			timeStart, timeErr := reformatDate(processes[key].time_start.String())
 			timeAlive := reformatDuration(processes[key].time_alive.String())
