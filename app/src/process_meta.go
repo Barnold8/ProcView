@@ -80,8 +80,6 @@ func reformatDate(input string) (string, error) {
 
 func reformatDuration(input string) string {
 
-	fmt.Printf("INCOMING TIME STRING: %s \n\n\n\n", input)
-
 	if !strings.Contains(input, "s") {
 		re := regexp.MustCompile(`(\d+(\.\d+)?)s`)
 		input = re.ReplaceAllStringFunc(input, func(s string) string {
@@ -90,8 +88,6 @@ func reformatDuration(input string) string {
 			return parts[0] + "s"
 		})
 	}
-
-	fmt.Printf("PARSED TIME: %s \n\n\n\n", input)
 
 	duration, err := time.ParseDuration(input)
 	if err != nil {
