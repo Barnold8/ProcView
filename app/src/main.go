@@ -102,7 +102,5 @@ func makeWindow() {
 }
 
 func main() {
-
 	makeWindow()
-
 }
