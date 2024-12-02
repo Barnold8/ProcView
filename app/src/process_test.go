@@ -919,13 +919,102 @@ func TestParseTime(t *testing.T) {
 }
 
 func TestReformatDate(t *testing.T) {
+	tests := []struct {
+		name        string
+		dateString  string
+		expected    string
+		expectError bool
+	}{
+		{"Test 1   Valid", "2024-12-01 16:22:30 +0000 UTC", "2024-12-01 16:22:30", false},
+		{"Test 2   Non-Valid", "20AB-12-01 16:22:30 +0000 UTC", "", true},
+		{"Test 3   Valid", "2022-03-17 14:52:10 +0000 UTC", "2022-03-17 14:52:10", false},
+		{"Test 4   Non-Valid", "2024-13-01 25:60:00 +0000 UTC", "", true},
+		{"Test 5   Valid", "2004-07-08 23:17:59 +0000 UTC", "2004-07-08 23:17:59", false},
+		{"Test 6   Non-Valid", "2021-07-45 99:99:99 +0000 UTC", "", true},
+		{"Test 7   Valid", "2018-01-25 08:04:01 +0000 UTC", "2018-01-25 08:04:01", false},
+		{"Test 8    Non-Valid", "2020-02-30 XX:XX:XX +0000 UTC", "", true},
+		{"Test 9   Valid", "2007-05-14 16:11:50 +0000 UTC", "2007-05-14 16:11:50", false},
+		{"Test 10   Non-Valid", "2019-11-99 14:AB:CD +0000 UTC", "", true},
+		{"Test 11   Valid", "2016-12-31 03:22:40 +0000 UTC", "2016-12-31 03:22:40", false},
+		{"Test 12   Non-Valid", "2018-06-15 32:61:01 +0000 UTC", "", true},
+		{"Test 13   Valid", "2019-10-22 10:56:12 +0000 UTC", "2019-10-22 10:56:12", false},
+		{"Test 14   Non-Valid", "2017-14-01 27:15:45 +0000 UTC", "", true},
+		{"Test 15   Valid", "2014-06-09 12:00:00 +0000 UTC", "2014-06-09 12:00:00", false},
+		{"Test 16   Non-Valid", "2016-05-01 99:99:99 +0000 UTC", "", true},
+		{"Test 17   Valid", "2010-04-18 21:45:20 +0000 UTC", "2010-04-18 21:45:20", false},
+		{"Test 18   Non-Valid", "2015-03-00 07:70:70 +0000 UTC", "", true},
+		{"Test 19   Valid", "2012-08-06 05:30:10 +0000 UTC", "2012-08-06 05:30:10", false},
+		{"Test 20   Non-Valid", "2014-01-01 99:99:ZZ +0000 UTC", "", true},
+		{"Test 21   Valid", "2011-02-28 18:12:59 +0000 UTC", "2011-02-28 18:12:59", false},
+		{"Test 22   Non-Valid", "2013-02-29 60:00:00 +0000 UTC", "", true},
+		{"Test 23   Valid", "2010-10-03 07:22:35 +0000 UTC", "2010-10-03 07:22:35", false},
+		{"Test 24   Non-Valid", "2012-12-01 25:00:00 +0000 UTC", "", true},
+		{"Test 25  Valid", "2009-12-12 09:50:01 +0000 UTC", "2009-12-12 09:50:01", false},
+		{"Test 26   Non-Valid", "2011-10-99 14:00:00 +0000 UTC", "", true},
+		{"Test 27   Valid", "2008-11-19 15:42:33 +0000 UTC", "2008-11-19 15:42:33", false},
+		{"Test 28   Non-Valid", "2010-09-31 45:15:30 +0000 UTC", "", true},
+		{"Test 29   Valid", "2001-12-01 16:22:30 +0000 UTC", "2001-12-01 16:22:30", false},
+		{"Test 30   Non-Valid", "2009-08-00 12:12:XY +0000 UTC", "", true},
+	}
 
-	t.Errorf("Test not yet implemented")
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+
+			result, err := reformatDate(tc.dateString)
+			if tc.expectError == true && err == nil {
+				t.Errorf("\n\nExpected an error exception but error was %s\nIt's possible that the date was parsed 'correctly' when it shouldn't, the result was %s\n", err, result)
+			} else if result != tc.expected {
+				t.Errorf("\n\nExpected parsed date: %s\n\nBut got %s\n", tc.expected, result)
+			}
+
+		})
+	}
 }
 
 func TestReformatDuration(t *testing.T) {
+	tests := []struct {
+		name           string
+		durationString string
+		expected       string
+	}{
+		{"Test 1", "69h54m23.0496006s", "2 days 21 hours 54 minutes 23 seconds"},
+		{"Test 2", "123h5m50s", "5 days 3 hours 5 minutes 50 seconds"},
+		{"Test 3", "12h0m0s", "12 hours"},
+		{"Test 4", "0h30m15s", "30 minutes 15 seconds"},
+		{"Test 5", "48h0m0s", "2 days"},
+		{"Test 6", "96h45m22s", "4 days 45 minutes 22 seconds"},
+		{"Test 7", "500h5m10s", "20 days 20 hours 5 minutes 10 seconds"},
+		{"Test 8", "24h0m0s", "1 days"},
+		{"Test 9", "9h15m35s", "9 hours 15 minutes 35 seconds"},
+		{"Test 10", "0h0m45s", "45 seconds"},
+		{"Test 11", "78h12m59s", "3 days 6 hours 12 minutes 59 seconds"},
+		{"Test 12", "10h10m5s", "10 hours 10 minutes 5 seconds"},
+		{"Test 13", "360h0m0s", "15 days"},
+		{"Test 14", "0h5m5s", "5 minutes 5 seconds"},
+		{"Test 15", "200h59m59s", "8 days 8 hours 59 minutes 59 seconds"},
+		{"Test 16", "60h0m0s", "2 days 12 hours"},
+		{"Test 17", "0h0m0s", "0 seconds"},
+		{"Test 18", "999h0m0s", "41 days 15 hours"},
+		{"Test 19", "72h1m20s", "3 days 1 minutes 20 seconds"},
+		{"Test 20", "0h1m5s", "1 minutes 5 seconds"},
+		{"Test 21", "250h0m0s", "10 days 10 hours"},
+		{"Test 22", "0h10m10s", "10 minutes 10 seconds"},
+		{"Test 23", "57h48m12s", "2 days 9 hours 48 minutes 12 seconds"},
+		{"Test 24", "333h12m0s", "13 days 21 hours 12 minutes"},
+		{"Test 25", "480h30m0s", "20 days 30 minutes"},
+	}
 
-	t.Errorf("Test not yet implemented")
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+
+			result := reformatDuration(tc.durationString)
+			if result != tc.expected {
+				t.Errorf("\n\nThe result given by reformatDuration was %s\n\nwhen\n\n%s was expected\n\n", result, tc.expected)
+			}
+
+		})
+	}
+
 }
 
 func TestParseProcesses(t *testing.T) {
