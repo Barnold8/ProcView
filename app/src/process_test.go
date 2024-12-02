@@ -879,9 +879,6 @@ func TestProcessMapToStringSortedByTimeStarted(t *testing.T) {
 }
 
 func TestParseTime(t *testing.T) {
-	// fmt.Println(parseTime("20241201231957.323450+000"))
-	// 2024-12-01 23:19:57 +0000 UTC <nil>
-
 	invalidDateTime := time.Time{}
 
 	tests := []struct {
