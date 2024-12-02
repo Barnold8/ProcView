@@ -288,6 +288,8 @@ func makeWindow() {
 
 	pWindow.app.Settings().SetTheme(theme.DarkTheme())
 
+	pWindow.window.SetTitle("ProcView")
+
 	go myFunc(data, ParseProcesses(string(grabProcesses())), list)
 
 	pWindow.window.ShowAndRun()
