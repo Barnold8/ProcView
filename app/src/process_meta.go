@@ -66,19 +66,16 @@ func parseTime(timeStr string) (time.Time, error) {
 }
 
 func reformatDate(input string) (string, error) {
-
 	layout := "2006-01-02 15:04:05 -0700 UTC"
 
 	t, err := time.Parse(layout, input)
 	if err != nil {
 		return "", err
 	}
-
 	return t.Format("2006-01-02 15:04:05"), nil
 }
 
 func reformatDuration(input string) string {
-
 	if !strings.Contains(input, "s") {
 		re := regexp.MustCompile(`(\d+(\.\d+)?)s`)
 		input = re.ReplaceAllStringFunc(input, func(s string) string {
@@ -115,7 +112,6 @@ func reformatDuration(input string) string {
 	if len(result) == 0 {
 		result = append(result, "0 seconds")
 	}
-
 	return strings.Join(result, " ")
 }
 
