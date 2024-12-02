@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image/color"
 	"strings"
 	"sync"
@@ -168,7 +169,7 @@ func File(value string, combo *widget.Select) {
 
 	switch value {
 	case "Export CSV":
-		break
+		SaveToFile("Export.csv", ProcessMapToCSV(UpdateProcesses(ParseProcesses(string(grabProcesses())), time.Now(), string(grabProcesses()))))
 
 	default:
 
@@ -183,7 +184,18 @@ func Settings(value string, combo *widget.Select) {
 	}
 
 	switch value {
-	case "":
+	case "Add To StartUp":
+		err := addProgramToStartup("ProcView.exe")
+		if err != nil {
+			fmt.Printf("Error detected when adding program to startup %sn", err)
+		}
+		break
+
+	case "Remove From StartUp":
+		err := removeFromStartUp()
+		if err != nil {
+			fmt.Printf("Error detected when adding program to startup %sn", err)
+		}
 		break
 
 	default:
