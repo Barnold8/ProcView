@@ -116,15 +116,13 @@ func reformatDuration(input string) string {
 }
 
 func ParseProcesses(str string) map[string]Process {
-
 	var split []string = strings.Split(str, "\n")
 	processes := make(map[string]Process)
 
 	for _, element := range split {
-
 		element = strings.TrimSpace(element)
-		if strings.Contains(element, "exe") {
 
+		if strings.Contains(element, "exe") {
 			var process Process
 			var processed_string []string = strings.Fields(element)
 
