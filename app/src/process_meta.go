@@ -26,7 +26,6 @@ func capitalizeFirstLetter(s string) string {
 }
 
 func parseTime(timeStr string) (time.Time, error) {
-
 	var process_time time.Time
 	var errors []error
 	re := regexp.MustCompile(`(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})\.\d+\+(\d{3})`)
