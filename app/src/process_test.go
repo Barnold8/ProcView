@@ -879,23 +879,61 @@ func TestProcessMapToStringSortedByTimeStarted(t *testing.T) {
 }
 
 func TestParseTime(t *testing.T) {
+	// fmt.Println(parseTime("20241201231957.323450+000"))
+	// 2024-12-01 23:19:57 +0000 UTC <nil>
 
-	fmt.Errorf("Test not yet implemented")
+	invalidDateTime := time.Time{}
+
+	tests := []struct {
+		name        string
+		timeString  string
+		expected    time.Time
+		expectError bool
+	}{
+		{"Test 1   Valid", "20241201231957.323450+000", time.Date(2024, 12, 01, 23, 19, 57, 0, time.UTC), false},
+		{"Test 1   Non Valid", "This should NOT work", invalidDateTime, true},
+		{"Test 2   Valid", "20231130220030.123456+000", time.Date(2023, 11, 30, 22, 0, 30, 0, time.UTC), false},
+		{"Test 2   Non Valid", "23X30704121212.345678+000", invalidDateTime, true},
+		{"Test 3   Valid", "20240101000000.000000+000", time.Date(2024, 01, 01, 0, 0, 0, 0, time.UTC), false},
+		{"Test 3   Non Valid", "2023-11-30T220030+000", invalidDateTime, true},
+		{"Test 4   Valid", "20241225123045.654321+000", time.Date(2024, 12, 25, 12, 30, 45, 0, time.UTC), false},
+		{"Test 4   Non Valid", "2023/11/30/220030+000", invalidDateTime, true},
+		{"Test 5   Valid", "20240315101515.999999+000", time.Date(2024, 03, 15, 10, 15, 15, 0, time.UTC), false},
+		{"Test 5   Non Valid", "20230704121212:345678+000", invalidDateTime, true},
+		{"Test 6   Valid", "20230704121212.345678+000", time.Date(2023, 07, 04, 12, 12, 12, 0, time.UTC), false},
+		{"Test 6   Non Valid", "20230704121212.ABCDEF+000", invalidDateTime, true},
+		{"Test 7   Valid", "20221115074525.123456+000", time.Date(2022, 11, 15, 07, 45, 25, 0, time.UTC), false},
+		{"Test 7   Non Valid", "202307041212.3456781212+000", invalidDateTime, true},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+
+			result, err := parseTime(tc.timeString)
+
+			if tc.expectError == true && err == nil {
+				t.Errorf("\n\nExpected an error exception but error was %s\nIt's possible that the time was parsed 'correctly' when it shouldn't, the result was %s\n", err, result)
+			} else if result != tc.expected {
+				t.Errorf("\n\nExpected parsed time: %s\n\nBut got %s\n", tc.expected, result)
+			}
+
+		})
+	}
 }
 
 func TestReformatDate(t *testing.T) {
 
-	fmt.Errorf("Test not yet implemented")
+	t.Errorf("Test not yet implemented")
 }
 
 func TestReformatDuration(t *testing.T) {
 
-	fmt.Errorf("Test not yet implemented")
+	t.Errorf("Test not yet implemented")
 }
 
 func TestParseProcesses(t *testing.T) {
 
-	fmt.Errorf("Test not yet implemented")
+	t.Errorf("Test not yet implemented")
 }
 
 // TODO: Change the parse durations to strings in the test examples in the sorting algorithms. for example 25h2m3s should be 1 day 1 hourr 2 minutes 3 seconds
