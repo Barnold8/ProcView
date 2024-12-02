@@ -1019,7 +1019,203 @@ func TestReformatDuration(t *testing.T) {
 
 func TestParseProcesses(t *testing.T) {
 
-	t.Errorf("Test not yet implemented")
-}
+	process_string_prelim := "Caption                             CreationDate\n System Idle Process                 20241127220850.650061+000\n System                              20241127220850.650061+000\nSecure System                       20241127220755.656859+000\nRegistry                            20241127220755.763257+000\n"
+	process_string1 := process_string_prelim + "smss.exe                 20241127220850.650061+000\ncsrss.exe                           20241127220854.462581+000\nwininit.exe                         20241127220855.811044+000\nservices.exe                        20241127220855.857921+000\n"
+	process_string2 := process_string_prelim + "explorer.exe                        20230814104512.342100+000\nlsass.exe                           20211225181245.987654+000\nsvchost.exe                         20231009130918.294718+000\nnotepad.exe                         20240917231425.837654+000\n"
+	process_string3 := process_string_prelim + "cmd.exe                             20210706134502.142233+000\npowershell.exe                      20221220175510.545566+000\n"
+	process_string4 := process_string_prelim + "chrome.exe                          20210203143000.129084+000\n"
+	process_string5 := process_string_prelim + "outlook.exe                         20230414101230.783210+000\nteams.exe                           20220125124545.942183+000\nonenote.exe                         20240807194510.537281+000\nedge.exe                            20230330150225.781092+000\n"
 
-// TODO: Change the parse durations to strings in the test examples in the sorting algorithms. for example 25h2m3s should be 1 day 1 hourr 2 minutes 3 seconds
+	process_set1 := make(map[string]Process)
+	process_set2 := make(map[string]Process)
+	process_set3 := make(map[string]Process)
+	process_set4 := make(map[string]Process)
+	process_set5 := make(map[string]Process)
+
+	// SET 1
+	process_set1["Smss.exe"] = Process{ // 20241127220850.650061+000
+		name:       "Smss.exe",
+		time_start: time.Date(2024, 11, 27, 22, 8, 50, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	process_set1["Csrss.exe"] = Process{ // 20241127220854.462581
+		name:       "Csrss.exe",
+		time_start: time.Date(2024, 11, 27, 22, 8, 54, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	process_set1["Wininit.exe"] = Process{ // 20241127220855.811044+000
+		name:       "Wininit.exe",
+		time_start: time.Date(2024, 11, 27, 22, 8, 55, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	process_set1["Services.exe"] = Process{ //20241127220855.857921+000
+		name:       "Services.exe",
+		time_start: time.Date(2024, 11, 27, 22, 8, 55, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	// SET 1
+
+	// SET 2
+	process_set2["Explorer.exe"] = Process{ // 20230814104512.342100+000
+		name:       "Explorer.exe",
+		time_start: time.Date(2023, 8, 14, 10, 45, 12, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	process_set2["Lsass.exe"] = Process{ // 20211225181245.987654+000
+		name:       "Lsass.exe",
+		time_start: time.Date(2021, 12, 25, 18, 12, 45, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	process_set2["Svchost.exe"] = Process{ // 20231009130918.294718+000
+		name:       "Svchost.exe",
+		time_start: time.Date(2023, 10, 9, 13, 9, 18, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	process_set2["Notepad.exe"] = Process{ // 20240917231425.837654+000
+		name:       "Notepad.exe",
+		time_start: time.Date(2024, 9, 17, 23, 14, 25, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+
+	// SET 2
+
+	// SET 3
+	process_set3["Cmd.exe"] = Process{ // 20210706134502.142233+000
+		name:       "Cmd.exe",
+		time_start: time.Date(2021, 7, 6, 13, 45, 2, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	process_set3["Powershell.exe"] = Process{ // 20221220175510.545566+000
+		name:       "Powershell.exe",
+		time_start: time.Date(2022, 12, 20, 17, 55, 10, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	// SET 3
+
+	// SET 4
+	process_set4["Chrome.exe"] = Process{ // 20210203143000.129084+000
+		name:       "Chrome.exe",
+		time_start: time.Date(2021, 2, 3, 14, 30, 0, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	// SET 4
+
+	// SET 5
+	process_set5["Outlook.exe"] = Process{ // 20230414101230.783210+000
+		name:       "Outlook.exe",
+		time_start: time.Date(2023, 4, 14, 10, 12, 30, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+
+	process_set5["Teams.exe"] = Process{ // 20220125124545.942183+000
+		name:       "Teams.exe",
+		time_start: time.Date(2022, 1, 25, 12, 45, 45, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	process_set5["Onenote.exe"] = Process{ // 20240807194510.537281+000
+		name:       "Onenote.exe",
+		time_start: time.Date(2024, 8, 7, 19, 45, 10, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	process_set5["Edge.exe"] = Process{ // 20230330150225.781092+000
+		name:       "Edge.exe",
+		time_start: time.Date(2023, 3, 30, 15, 2, 25, 0, time.UTC),
+		time_alive: func() time.Duration {
+			duration, _ := time.ParseDuration("0s")
+			return duration
+		}(),
+	}
+	// SET 5
+
+	tests := []struct {
+		name          string
+		processString string
+		expected      map[string]Process
+	}{
+		{"Test 1", process_string1, process_set1},
+		{"Test 2", process_string2, process_set2},
+		{"Test 3", process_string3, process_set3},
+		{"Test 4", process_string4, process_set4},
+		{"Test 5", process_string5, process_set5},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+
+			result := ParseProcesses(tc.processString)
+			if reflect.DeepEqual(result, tc.expected) == false {
+				result_keys := extractKeys(result)
+				expected_keys := extractKeys(tc.expected)
+				sort.Strings(result_keys)
+				sort.Strings(expected_keys)
+
+				if reflect.DeepEqual(result_keys, expected_keys) == false {
+					t.Errorf("The resulting map does not match the expected map based on the keys extracted from both maps not matching")
+
+					t.Errorf("\n\nResult keys: \n")
+					for _, key := range result_keys {
+						t.Errorf("%s\n", key)
+					}
+					t.Errorf("\n\nExpected keys: \n")
+					for _, key := range expected_keys {
+						t.Errorf("%s\n", key)
+					}
+
+				} else {
+					for _, key := range result_keys {
+
+						t.Errorf("\n\nKEY: %s\n", key)
+						t.Errorf("Got: %s\tExpected: %s\n", result[key].name, tc.expected[key].name)
+						t.Errorf("Got: %s\tExpected: %s\n", result[key].time_start, tc.expected[key].time_start)
+						t.Errorf("Got: %s\tExpected: %s\n", result[key].time_alive, tc.expected[key].time_alive)
+
+					}
+
+				}
+			}
+
+		})
+	}
+}
