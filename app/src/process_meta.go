@@ -26,7 +26,6 @@ func capitalizeFirstLetter(s string) string {
 }
 
 func parseTime(timeStr string) (time.Time, error) {
-
 	var process_time time.Time
 	var errors []error
 	re := regexp.MustCompile(`(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})\.\d+\+(\d{3})`)
@@ -67,19 +66,16 @@ func parseTime(timeStr string) (time.Time, error) {
 }
 
 func reformatDate(input string) (string, error) {
-
 	layout := "2006-01-02 15:04:05 -0700 UTC"
 
 	t, err := time.Parse(layout, input)
 	if err != nil {
 		return "", err
 	}
-
 	return t.Format("2006-01-02 15:04:05"), nil
 }
 
 func reformatDuration(input string) string {
-
 	if !strings.Contains(input, "s") {
 		re := regexp.MustCompile(`(\d+(\.\d+)?)s`)
 		input = re.ReplaceAllStringFunc(input, func(s string) string {
@@ -116,20 +112,17 @@ func reformatDuration(input string) string {
 	if len(result) == 0 {
 		result = append(result, "0 seconds")
 	}
-
 	return strings.Join(result, " ")
 }
 
 func ParseProcesses(str string) map[string]Process {
-
 	var split []string = strings.Split(str, "\n")
 	processes := make(map[string]Process)
 
 	for _, element := range split {
-
 		element = strings.TrimSpace(element)
-		if strings.Contains(element, "exe") {
 
+		if strings.Contains(element, "exe") {
 			var process Process
 			var processed_string []string = strings.Fields(element)
 
